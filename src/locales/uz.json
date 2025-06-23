@@ -1,0 +1,11 @@
+{
+  "welcome": "Xush kelibsiz!",
+    "login": "Kirish",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "sign_in": "Kirish",
+    "no_account": "Hisobingiz yo'qmi?",
+    "sign_up": "Ro'yxatdan o'tish",
+    "forgot_password": "Parolni unutdingizmi?",
+    "reset_password": "Parolni tiklash"
+}
