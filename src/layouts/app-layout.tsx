@@ -8,12 +8,12 @@ import { LanguageToggle } from "@/components/language-toggle";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="flex">
+      <div className="flex w-full">
         <div className="relative">
           <AppSidebar />
         </div>
-        <main className="flex-1 p-4">
-          <SidebarTrigger/>
+        <main className="flex-1 p-4 ">
+          <SidebarTrigger />
           <div className="fixed top-0 right-0 flex gap-2 p-2 z-50">
             <LanguageToggle />
             <ModeToggle />
