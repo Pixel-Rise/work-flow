@@ -211,6 +211,7 @@ export default function ProjectsPage() {
                 </AccordionItem>
                 <AccordionItem value="documents">
                   <AccordionTrigger>{t("documents")}</AccordionTrigger>
+                  {/* drag and drop and download */}
                   <AccordionContent>{t("no_documents")}</AccordionContent>
                 </AccordionItem>
         
