@@ -251,19 +251,21 @@ export default function ProjectsPage() {
             <DrawerTitle>{t("are_you_sure")}</DrawerTitle>
             <DrawerDescription>{t("delete_project_confirmation")}</DrawerDescription>
           </DrawerHeader>
-          <DrawerFooter className="flex justify-center gap-2">
+          <DrawerFooter>
+            <div className="flex flex-row justify-center items-center gap-2">
             <DrawerClose asChild>
               <Button variant="outline">{t("cancel")}</Button>
             </DrawerClose>
-            <Button  onClick={confirmDelete}>
+            <Button variant={"destructive"}  onClick={confirmDelete}>
               {t("delete")}
             </Button>
+            </div>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
 
-      <FloatingActionButton className="gap-2">
-        <Plus className="w-4 h-4" /> {t("add_project")}
+      <FloatingActionButton className="h-12 w-12 border">
+        <Plus size={65} />
       </FloatingActionButton>
     </div>
   );
