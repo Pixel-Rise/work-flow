@@ -11,6 +11,7 @@ import {
 import type { ChartConfig } from "@/components/ui/chart";
 import { ChartContainer } from "@/components/ui/chart";
 import { Clock } from "lucide-react";
+import { usePrimaryColor } from "@/components/primary-color-provider";
 
 const HomePage: React.FC = () => {
   const t = useTranslation();
@@ -25,10 +26,13 @@ const HomePage: React.FC = () => {
     { weekday: t("sunday"), hour: 0.1 },
   ];
 
+  // Assuming you have a theme or color provider, e.g. useTheme or similar
+  const { primaryColor } = usePrimaryColor();
+
   const chartConfig = {
     desktop: {
       label: "Hours",
-      color: "#2563eb",
+      color: primaryColor,
     },
   } satisfies ChartConfig;
 
@@ -70,16 +74,16 @@ const HomePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chap ustun: Sana va vaqt */}
         <div className="flex flex-col justify-between items-center lg:items-start text-center lg:text-left gap-4">
-          <div className="uppercase tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-blue-600 to-gray-400 bg-clip-text text-transparent">
+          <div className="uppercase tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-primary to-primary/40 bg-clip-text text-transparent">
             {t("today")}
           </div>
-          <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-blue-500 to-gray-300 bg-clip-text text-transparent">
+          <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-primary/80 to-primary/30 bg-clip-text text-transparent">
             {day}-{formattedMonth.toUpperCase()}
           </div>
-          <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium bg-gradient-to-r from-blue-400 to-gray-200 bg-clip-text text-transparent">
+          <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium bg-gradient-to-r from-primary/60 to-primary/20 bg-clip-text text-transparent">
             {formattedWeekday}
           </div>
-          <div className="text-4xl sm:text-5xl lg:text-6xl font-mono mt-2 bg-gradient-to-r from-blue-300 to-gray-100 bg-clip-text text-transparent">
+          <div className="text-4xl sm:text-5xl lg:text-6xl font-mono mt-2 bg-gradient-to-r from-primary/40 to-primary/10 bg-clip-text text-transparent">
             {time}
           </div>
         </div>
@@ -88,7 +92,7 @@ const HomePage: React.FC = () => {
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between bg-muted/40 border rounded-xl px-6 py-4 shadow-sm">
             <div className="flex items-center gap-2">
-              <Clock className="w-6 h-6 text-blue-500" />
+              <Clock className="w-6 h-6 text-primary" />
               <span className="text-base sm:text-lg font-medium">
                 {t("weekly_work_hours")}
               </span>

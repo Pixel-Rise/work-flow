@@ -5,6 +5,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ShoppingCart, School } from "lucide-react";
 import me from "@/assets/avatar.jpg";
 import { useTranslation } from "@/components/language-provider";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 interface Task {
   id: number;
@@ -62,6 +67,8 @@ const sampleProjects: Project[] = [
     contributors: [
       { id: 1, name: "Azizbek", image: me, contribution: 60 },
       { id: 2, name: "Ali", contribution: 40 },
+      { id: 3, name: "Laylo", contribution: 30 },
+      { id: 4, name: "Bek", contribution: 20 },
     ],
   },
   {
@@ -163,7 +170,7 @@ export default function ReportsPage() {
                     <p className="text-lg font-semibold text-muted-foreground">
                       {status.name}
                     </p>
-                    <p className="text-3xl font-bold text-primary">
+                    <p className="text-3xl font-bold">
                       {status.value}
                     </p>
                   </div>
@@ -174,23 +181,35 @@ export default function ReportsPage() {
                 <h3 className="text-lg font-semibold mb-2">
                   {t("contributors")}
                 </h3>
-                <div className="flex gap-2 p-1">
-                  {project.contributors.map((c) => (
-                    <div
-                      key={c.id}
-                      className="flex flex-row items-center gap-2"
-                    >
-                      <Avatar className="h-10 w-10 border">
-                        <AvatarImage src={c.image} alt={c.image} />
-                        <AvatarFallback>{c.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <p className=" mt-1 text-muted-foreground text-center">
-                        {c.name}
-                      </p>
-                      <Badge className="ml-2">{c.contribution}%</Badge>
-                    </div>
-                  ))}
-                </div>
+                <>
+                  <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                    {project.contributors.map((c) => (
+                      <HoverCard openDelay={500}>
+                        <HoverCardTrigger
+                          key={c.id}
+                          className="cursor-pointer hover:scale-120 transition-transform duration-500 hover:z-10"
+                        >
+                          <Avatar className="border border-">
+                            <AvatarImage src={c.image} alt={c.image} />
+                            <AvatarFallback>{c.name[0]}</AvatarFallback>
+                          </Avatar>
+                        </HoverCardTrigger>
+                        <HoverCardContent className="w-auto flex flex-row">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="h-8 w-8 border">
+                              <AvatarImage src={c.image} alt={c.name} />
+                              <AvatarFallback>{c.name[0]}</AvatarFallback>
+                            </Avatar>
+                            <span className="text-sm font-medium">
+                              {c.name}
+                            </span>
+                          </div>
+                          <Badge className="ml-4" variant="secondary">{c.contribution}%</Badge>
+                        </HoverCardContent>
+                      </HoverCard>
+                    ))}
+                  </div>
+                </>
               </div>
             </CardContent>
           </Card>

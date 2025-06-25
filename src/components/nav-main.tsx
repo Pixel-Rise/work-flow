@@ -63,7 +63,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                   {typeof item.badge === "number" && item.badge > 0 && (
-                    <Badge variant="destructive" className="size-5 text-xs">
+                    <Badge  className="size-5 text-xs">
                       {item.badge > 9 ? "9+" : item.badge}
                     </Badge>
                   )}
@@ -91,7 +91,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                                   <HoverCardTrigger
                                     className={`flex items-center gap-2 w-full ${
                                       isActive
-                                        ? "text-blue-500 font-semibold"
+                                        ? "text-primary font-semibold"
                                         : ""
                                     }`}
                                   >
@@ -124,7 +124,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                                       <span
                                         className={`text-sm ${
                                           isActive
-                                            ? "text-blue-500 font-semibold"
+                                            ? "text-primary font-semibold"
                                             : ""
                                         } font-medium`}
                                       >
@@ -150,7 +150,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                                 </HoverCard>
 
                                 <Badge
-                                  variant="destructive"
+                                  
                                   className="ml-auto size-5 text-xs"
                                 >
                                   {subItem.badge > 9 ? "9+" : subItem.badge}
@@ -159,7 +159,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                             ) : (
                               <span
                                 className={`truncate max-w-[150px] ${
-                                  isActive ? "text-blue-500 font-semibold" : ""
+                                  isActive ? "text-primary font-semibold" : ""
                                 } overflow-hidden whitespace-nowrap`}
                               >
                                 {subItem.title}

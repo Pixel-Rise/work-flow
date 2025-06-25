@@ -7,58 +7,70 @@ import ReportsPage from "@/pages/reports-page";
 import DaysOffPage from "@/pages/days-off-page";
 import ProjectsPage from "@/pages/projects-page";
 import LoginPage from "@/pages/login-page";
+import TasksPage from "@/pages/tasks-page";
 import AppLayout from "@/layouts/app-layout";
 import AuthLayout from "@/layouts/auth-layout";
+import { PrimaryColorProvider } from "@/components/primary-color-provider";
 
 function App() {
   return (
     <ThemeProvider>
-      <LanguageProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <AppLayout>
-                  <HomePage />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/projects"
-              element={
-                <AppLayout>
-                  <ProjectsPage />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/reports"
-              element={
-                <AppLayout>
-                  <ReportsPage />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/days-off"
-              element={
-                <AppLayout>
-                  <DaysOffPage />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <AuthLayout>
-                  <LoginPage />
-                </AuthLayout>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </LanguageProvider>
+      <PrimaryColorProvider>
+          <LanguageProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <AppLayout>
+                      <HomePage />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="/projects"
+                  element={
+                    <AppLayout>
+                      <ProjectsPage />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="/reports"
+                  element={
+                    <AppLayout>
+                      <ReportsPage />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="/days-off"
+                  element={
+                    <AppLayout>
+                      <DaysOffPage />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="/tasks"
+                  element={
+                    <AppLayout>
+                      <TasksPage />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <AuthLayout>
+                      <LoginPage />
+                    </AuthLayout>
+                  }
+                />
+              </Routes>
+            </BrowserRouter>
+          </LanguageProvider>
+      </PrimaryColorProvider>
     </ThemeProvider>
   );
 }

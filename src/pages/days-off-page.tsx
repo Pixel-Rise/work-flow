@@ -42,6 +42,76 @@ const dayOffDates = [
 
 export default function DaysOffPage() {
   return (
+    <div className="grid lg:grid-cols-2 gap-4 p-2">
+      <Card>
+        <CardContent className="">
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square"
+          >
+            <RadialBarChart
+              data={chartData}
+              startAngle={90}
+              endAngle={450}
+              innerRadius={30}
+              // outerRadius={110}
+            >
+              <RadialBar dataKey="value" background />
+            </RadialBarChart>
+          </ChartContainer>
+        </CardContent>
+        <CardFooter className="flex-col gap-2 text-sm">
+          <div className="flex items-center gap-2 leading-none font-medium">
+            Total Days Off Used: 13
+          </div>
+          <div className="text-muted-foreground leading-none">
+            Showing breakdown of all types of leaves
+          </div>
+          <div className="flex justify-center flex-row gap-2 mt-4">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-[var(--chart-1)] rounded-full" />
+            <span className="text-sm">Paid Time Off</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-[var(--chart-2)] rounded-full" />
+            <span className="text-sm">Personal Leave</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-[var(--chart-3)] rounded-full" />
+            <span className="text-sm">Sick Leave</span>
+          </div>
+        </div>
+        </CardFooter>
+        
+      </Card>
+
+      <Card>
+        <CardContent className="h-full w-full p-0">
+          <Calendar
+            className="w-full h-full"
+            onDayClick={(date) => {
+              const isDayOff = dayOffDates.some(
+                (dayOffDate) =>
+                  dayOffDate.toDateString() === date.toDateString()
+              );
+              return (
+                <div className="relative">
+                  {isDayOff && (
+                    <Badge className="absolute top-0 right-0 text-xs">
+                      Day Off
+                    </Badge>
+                  )}
+                  {date.getDate()}
+                </div>
+              );
+            }}
+          ></Calendar>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  return (
     <div className="p-6 space-y-6">
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
@@ -109,8 +179,7 @@ export default function DaysOffPage() {
                 </div>
               );
             }}
-          >
-          </Calendar>
+          ></Calendar>
         </CardContent>
       </Card>
     </div>

@@ -261,7 +261,7 @@ export default function ProjectsPage() {
             <DrawerClose asChild>
               <Button variant="outline">{t("cancel")}</Button>
             </DrawerClose>
-            <Button variant="destructive" onClick={confirmDelete}>
+            <Button  onClick={confirmDelete}>
               {t("delete")}
             </Button>
           </DrawerFooter>
