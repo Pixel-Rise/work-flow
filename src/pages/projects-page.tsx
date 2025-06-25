@@ -47,6 +47,7 @@ import {
   School,
 } from "lucide-react";
 import { useTranslation } from "@/components/language-provider";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
 
 interface Phase {
   id: number;
@@ -135,13 +136,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">{t("projects")}</h1>
-        <Button className="gap-2">
-          <Plus className="w-4 h-4" /> {t("add_project")}
-        </Button>
-      </div>
-
       {projects.map((project) => {
         const Icon = project.icon;
         return (
@@ -267,6 +261,10 @@ export default function ProjectsPage() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+
+      <FloatingActionButton className="gap-2">
+        <Plus className="w-4 h-4" /> {t("add_project")}
+      </FloatingActionButton>
     </div>
   );
 }

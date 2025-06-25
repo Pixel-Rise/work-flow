@@ -96,7 +96,6 @@ export default function TasksPage() {
 
 	return (
 		<KanbanProvider onDragEnd={handleDragEnd} className="flex flex-col p-6 w-full space-y-4 h-full">
-			<h1 className="text-3xl font-bold">{t("tasks")}</h1>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 h-full">
 				{exampleStatuses.map((status) => (
 					<KanbanBoard key={status.id} id={status.id} className="h-full">

@@ -66,6 +66,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             title: t("dayoff"),
             url: "/days-off",
           },
+          {
+            title: t("tasks"),
+            url: "/tasks",
+          },
         ],
       },
       {

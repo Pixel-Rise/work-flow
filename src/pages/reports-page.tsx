@@ -95,8 +95,6 @@ export default function ReportsPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold">{t("project_reports")}</h1>
-
       {sampleProjects.map((project) => {
         const allTasks = project.phases.flatMap((p) => p.tasks);
         const taskStats = {
