@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Palette, Check, Pipette } from "lucide-react";
+import { Palette, Check } from "lucide-react";
 import { usePrimaryColor } from "@/components/primary-color-provider";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -47,19 +47,13 @@ export function PrimaryColorToggle() {
         ))}
 
         <button
-          className="relative w-8 h-8 rounded-full cursor-pointer border"
-          title="Custom color"
+          className="relative w-8 h-8 rounded-full cursor-pointer border-2 border-dashed border-muted-foreground/50 hover:border-muted-foreground/80 transition-colors"
+          onClick={() => setPrimaryColor("")}
+          title="Reset to default color"
         >
-          <label className="absolute inset-0 flex items-center justify-center cursor-pointer">
-            <input
-              type="color"
-              className="opacity-0 w-full h-full cursor-pointer"
-              value={primaryColor}
-              onChange={(e) => setPrimaryColor(e.target.value)}
-              aria-label="Pick a custom color"
-            />
-            <Pipette className="absolute inset-0 m-auto w-4 h-4" />
-          </label>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-3 h-3 rounded-full bg-primary" />
+          </div>
         </button>
       </PopoverContent>
     </Popover>

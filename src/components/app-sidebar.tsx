@@ -6,7 +6,8 @@ import {
   ShoppingCart,
   Dumbbell,
   MessageSquareText,
-  Settings2,
+  Umbrella,
+  ChartBarBig
 } from "lucide-react"
 import { useTranslation } from "@/components/language-provider";
 
@@ -16,8 +17,6 @@ import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import  Avatar from "@/assets/avatar.jpg"
 import  TeamAvatar from "@/assets/it-forelead.jpg"
-
-import type { Message } from "@/types/message"
 
 import {
   Sidebar,
@@ -45,139 +44,47 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navMain: [
       {
-        title: t("playground"),
-        url: "#",
+        title: t("dashboard"),
+        url: "/",
         icon: LayoutDashboard,
         isActive: true,
-        items: [
-          {
-            title: t("dashboard"),
-            url: "/",
-          },
-          {
-            title: t("projects"),
-            url: "/projects",
-          },
-          {
-            title: t("reports"),
-            url: "/reports",
-          },
-          {
-            title: t("dayoff"),
-            url: "/days-off",
-          },
-          {
-            title: t("tasks"),
-            url: "/tasks",
-          },
-        ],
+      },
+      {
+        title: t("projects"),
+        url: "/projects",
+        icon: BookOpen,
+      },
+      {
+        title: t("reports"),
+        url: "/reports",
+        icon: ChartBarBig,
+      },
+      {
+        title: t("dayoff"),
+        url: "/days-off",
+        icon: Umbrella,
       },
       {
         title: t("chats"),
-        url: "#",
+        url: "/chats",
         icon: MessageSquareText,
         badge: 10,
-        items: [
-          {
-            title: "Azizbek Matsalayev",
-            url: "#",
-            icon: Avatar,
-            badge: 1,
-            lastMessage: {
-              message: "Hello, how are you?",
-              createdAt: new Date("2023-10-01T12:00:00Z"),
-            } as Message,
-          },
-          {
-            title: "John Doe",
-            url: "#",
-            badge: 4,
-            lastMessage: {
-              message: "Let's catch up later.",
-              createdAt: new Date("2023-10-01T11:30:00Z"),
-            } as Message,
-          },
-          {
-            title: "Jane Smith",
-            url: "#",
-            badge: 2,
-            lastMessage: {
-              message: "Did you receive my last email?",
-              createdAt: new Date("2023-10-01T10:45:00Z"),
-            } as Message,
-          },
-          {
-            title: "Michael Johnson",
-            url: "#",
-            badge: 3,
-            lastMessage: {
-              message: "Can we reschedule our meeting?",
-              createdAt: new Date("2023-10-01T09:15:00Z"),
-            } as Message,
-          },
-        ],
-      },
-      {
-        title: t("documentation"),
-        url: "#",
-        icon: BookOpen,
-        items: [
-          {
-            title: t("introduction"),
-            url: "#",
-          },
-          {
-            title: t("get_started"),
-            url: "#",
-          },
-          {
-            title: t("tutorials"),
-            url: "#",
-          },
-          {
-            title: t("changelog"),
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: t("settings"),
-        url: "#",
-        icon: Settings2,
-        items: [
-          {
-            title: t("general"),
-            url: "#",
-          },
-          {
-            title: t("team"),
-            url: "#",
-          },
-          {
-            title: t("billing"),
-            url: "#",
-          },
-          {
-            title: t("limits"),
-            url: "#",
-          },
-        ],
-      },
+      }
     ],
     projects: [
       {
         name: "Digital School",
-        url: "#",
+        url: "/tasks/1",
         icon: School,
       },
       {
         name: "SalesFlow",
-        url: "#",
+        url: "/tasks/2",
         icon: ShoppingCart,
       },
       {
         name: "Legenda Big Fit",
-        url: "#",
+        url: "/tasks/3",
         icon: Dumbbell,
       },
     ],

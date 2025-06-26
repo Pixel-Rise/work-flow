@@ -8,155 +8,143 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RadialBarChart, RadialBar } from "recharts";
 import { Calendar } from "@/components/ui/calendar";
-import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import { Badge } from "@/components/ui/badge";
+import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
+import { RadialBarChart, RadialBar } from "recharts";
 import { useTranslation } from "@/components/language-provider";
+import { usePageTitle } from "@/components/title-provider";
+import { useMemo } from "react";
 
-const dayOffDates = [
-  { date: new Date(2025, 5, 10), type: "sick_leave" }, // June 10, 2025 - Sick Leave
-  { date: new Date(2025, 5, 15), type: "paid_time_off" }, // June 15, 2025 - Paid Time Off
-  { date: new Date(2025, 5, 20), type: "personal_leave" }, // June 20, 2025 - Personal Leave
-];
+// ✅ Sanani normalize qilish
+function normalizeDate(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+// ✅ Dam olish kunlari ro'yxati
+const rawDayOffDates = [
+  { date: new Date(2025, 5, 10), type: "sick_leave" },
+  { date: new Date(2025, 5, 15), type: "paid_time_off" },
+  { date: new Date(2025, 5, 20), type: "personal_leave" },
+] as const;
+
+// ✅ Har bir tur uchun konfiguratsiya
+const leaveTypes = {
+  sick_leave: { label: "sick_leave", color: "#eab308", short: "S" },
+  paid_time_off: { label: "paid_time_off", color: "#22c55e", short: "P" },
+  personal_leave: { label: "personal_leave", color: "#ef4444", short: "L" },
+} as const;
 
 export default function DaysOffPage() {
   const t = useTranslation();
+  
+  // Set page title
+  usePageTitle(t("dayoff"));
 
-  // Modifiers yaratish
-  const sickLeaveDates = dayOffDates
-    .filter((item) => item.type === "sick_leave")
-    .map((item) => item.date);
-  const paidTimeOffDates = dayOffDates
-    .filter((item) => item.type === "paid_time_off")
-    .map((item) => item.date);
-  const personalLeaveDates = dayOffDates
-    .filter((item) => item.type === "personal_leave")
-    .map((item) => item.date);
+  // ✅ Normalize qilingan dam olish kunlari
+  const dayOffDates = rawDayOffDates.map((item) => ({
+    ...item,
+    date: normalizeDate(item.date),
+  }));
 
+  // ✅ Har bir tur uchun sanalarni ajratib olish
+  const groupedDates = useMemo(() => {
+    const groups: Record<keyof typeof leaveTypes, Date[]> = {
+      sick_leave: [],
+      paid_time_off: [],
+      personal_leave: [],
+    };
+    dayOffDates.forEach(({ date, type }) => {
+      groups[type].push(date);
+    });
+    return groups;
+  }, [dayOffDates]);
+
+  // ✅ Chart ma'lumotlari
   const chartData = [
-    { type: t("sick_leave"), value: 5, fill: "#eab308" }, // sariq - eng tashqarida
-    { type: t("paid_time_off"), value: 4, fill: "#22c55e" }, // yashil - o'rtada
-    { type: t("personal_leave"), value: 2, fill: "#ef4444" }, // qizil - eng ichkarida
+    { type: t("sick_leave"), value: 5, fill: leaveTypes.sick_leave.color },
+    { type: t("paid_time_off"), value: 4, fill: leaveTypes.paid_time_off.color },
+    { type: t("personal_leave"), value: 2, fill: leaveTypes.personal_leave.color },
   ];
 
-  const chartConfig = {
-    [t("personal_leave")]: {
-      label: t("personal_leave"),
-      color: "#ef4444",
-    },
-    [t("paid_time_off")]: {
-      label: t("paid_time_off"),
-      color: "#22c55e",
-    },
-    [t("sick_leave")]: {
-      label: t("sick_leave"),
-      color: "#eab308",
-    },
-  } satisfies ChartConfig;
+  const chartConfig: ChartConfig = Object.fromEntries(
+    Object.entries(leaveTypes).map(([_, { label, color }]) => [
+      t(label),
+      { label: t(label), color },
+    ])
+  );
+
   return (
-    <div className="grid lg:grid-cols-2 gap-4 p-2">
+    <div className="grid lg:grid-cols-2 gap-3">
+      {/* 1. CHART */}
       <Card>
-        <CardHeader className="items-center pb-0">
-          <div className="flex items-center justify-between w-full">
-            <CardTitle>{t("usage")}</CardTitle>
-            <Button>{t("send_request")}</Button>
-          </div>
+        <CardHeader className="flex justify-between items-center pb-0">
+          <CardTitle>{t("usage")}</CardTitle>
+          <Button>{t("send_request")}</Button>
         </CardHeader>
-        <CardContent className="">
+        <CardContent>
           <ChartContainer config={chartConfig} className="mx-auto">
             <RadialBarChart
               data={chartData}
               startAngle={90}
               endAngle={450}
               innerRadius={30}
-              // outerRadius={10}
             >
               <RadialBar dataKey="value" background />
             </RadialBarChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex-col gap-2 text-sm">
-          <div className="flex items-center gap-2 leading-none font-medium">
+        <CardFooter className="flex flex-col gap-2 text-sm">
+          <div className="font-medium">
             {t("total_days_off_used")}: 13
           </div>
-          <div className="text-muted-foreground leading-none">
+          <div className="text-muted-foreground">
             {t("showing_breakdown_leaves")}
           </div>
-          <div className="flex justify-center flex-row gap-2 mt-4">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-yellow-500 rounded-full" />
-              <span className="text-sm">{t("sick_leave")}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-500 rounded-full" />
-              <span className="text-sm">{t("paid_time_off")}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-red-500 rounded-full" />
-              <span className="text-sm">{t("personal_leave")}</span>
-            </div>
+          <div className="flex justify-center gap-4 mt-2">
+            {Object.entries(leaveTypes).map(([key, { label, color }]) => (
+              <div key={key} className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }} />
+                <span className="text-sm">{t(label)}</span>
+              </div>
+            ))}
           </div>
         </CardFooter>
       </Card>
 
+      {/* 2. KALENDAR */}
       <Card>
-        <CardContent className="h-full w-full p-0">
+        <CardContent className="p-0">
           <Calendar
-            selectedDates={dayOffDates.map((item) => item.date)}
             className="w-full h-full"
-            modifiers={{
-              sickLeave: sickLeaveDates,
-              paidTimeOff: paidTimeOffDates,
-              personalLeave: personalLeaveDates,
-            }}
+            modifiers={groupedDates}
             modifiersClassNames={{
-              sickLeave:
-                "bg-yellow-500 text-yellow-900 rounded border-yellow-500",
-              paidTimeOff:
-                "bg-green-500 text-green-900 rounded border-green-500",
-              personalLeave: "bg-red-500 text-red-900 rounded border-red-500",
+              sick_leave: "bg-yellow-500 text-white rounded",
+              paid_time_off: "bg-green-500 text-white rounded",
+              personal_leave: "bg-red-500 text-white rounded",
             }}
             components={{
               DayButton: ({ day }) => {
-                const dayOff = dayOffDates.find(
-                  (dayOffDate) =>
-                    dayOffDate.date.toDateString() === day.date.toDateString()
+                const matched = dayOffDates.find(
+                  (d) => d.date.toDateString() === normalizeDate(day.date).toDateString()
                 );
 
-                if (dayOff) {
-                  // Rang belgilash
-                  let containerStyle = "";
-                  let badgeStyle = "";
-                  let typeText = "";
-
-                  switch (dayOff.type) {
-                    case "sick_leave":
-                      containerStyle =
-                        "bg-yellow-100 border-2 border-yellow-500";
-                      badgeStyle = "bg-yellow-500 text-white";
-                      typeText = "S";
-                      break;
-                    case "paid_time_off":
-                      containerStyle = "bg-green-100 border-2 border-green-500";
-                      badgeStyle = "bg-green-500 text-white";
-                      typeText = "P";
-                      break;
-                    case "personal_leave":
-                      containerStyle = "bg-red-100 border-2 border-red-500";
-                      badgeStyle = "bg-red-500 text-white";
-                      typeText = "L";
-                      break;
-                  }
-
+                if (matched) {
+                  const { type } = matched;
+                  const info = leaveTypes[type];
                   return (
                     <button
-                      className={`relative w-full h-full p-1 text-center rounded-md ${containerStyle}`}
+                      className={`relative w-full h-full p-1 text-center rounded-md`}
+                      style={{
+                        backgroundColor: `${info.color}20`,
+                        border: `2px solid ${info.color}`,
+                      }}
                     >
                       <Badge
-                        className={`absolute -top-1 -right-1 text-xs px-1 py-0 h-4 w-4 flex items-center justify-center rounded-full ${badgeStyle}`}
+                        className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-xs rounded-full text-white"
+                        style={{ backgroundColor: info.color }}
                       >
-                        {typeText}
+                        {info.short}
                       </Badge>
                       <span className="font-medium">{day.date.getDate()}</span>
                     </button>

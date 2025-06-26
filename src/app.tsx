@@ -1,11 +1,13 @@
 // App.tsx
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/components/language-provider";
+import { TitleProvider } from "@/components/title-provider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "@/pages/home-page";
 import ReportsPage from "@/pages/reports-page";
 import DaysOffPage from "@/pages/days-off-page";
 import ProjectsPage from "@/pages/projects-page";
+import ChatsPage from "@/pages/chats-page";
 import LoginPage from "@/pages/login-page";
 import TasksPage from "@/pages/tasks-page";
 import AppLayout from "@/layouts/app-layout";
@@ -16,6 +18,7 @@ function App() {
   return (
     <ThemeProvider>
       <PrimaryColorProvider>
+        <TitleProvider>
           <LanguageProvider>
             <BrowserRouter>
               <Routes>
@@ -52,7 +55,15 @@ function App() {
                   }
                 />
                 <Route
-                  path="/tasks"
+                  path="/chats"
+                  element={
+                    <AppLayout>
+                      <ChatsPage />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="/tasks/:projectId"
                   element={
                     <AppLayout>
                       <TasksPage />
@@ -70,6 +81,7 @@ function App() {
               </Routes>
             </BrowserRouter>
           </LanguageProvider>
+        </TitleProvider>
       </PrimaryColorProvider>
     </ThemeProvider>
   );

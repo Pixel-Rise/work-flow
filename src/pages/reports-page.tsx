@@ -2,14 +2,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ShoppingCart, School } from "lucide-react";
+import { ShoppingCart, School, Dumbbell } from "lucide-react";
 import me from "@/assets/avatar.jpg";
 import { useTranslation } from "@/components/language-provider";
+import { usePageTitle } from "@/components/title-provider";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 interface Task {
   id: number;
@@ -72,6 +81,26 @@ const sampleProjects: Project[] = [
     ],
   },
   {
+    id: 1,
+    name: "Legenda Big Fit",
+    icon: Dumbbell,
+    phases: [
+      {
+        id: 1,
+        title: "NFC Integration",
+        progress: 50,
+        tasks: [
+          { id: 1, title: "Wireframes", status: "in_progress" },
+          { id: 2, title: "Mockups", status: "done" },
+        ],
+      },
+    ],
+    contributors: [
+      { id: 1, name: "Azizbek", image: me, contribution: 60 },
+      { id: 4, name: "Bek", contribution: 20 },
+    ],
+  },
+  {
     id: 2,
     name: "Digital School",
     icon: School,
@@ -93,8 +122,11 @@ const sampleProjects: Project[] = [
 export default function ReportsPage() {
   const t = useTranslation();
 
+  // Set page title
+  usePageTitle(t("reports"));
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-3">
       {sampleProjects.map((project) => {
         const allTasks = project.phases.flatMap((p) => p.tasks);
         const taskStats = {
@@ -145,12 +177,39 @@ export default function ReportsPage() {
         return (
           <Card key={project.id}>
             <CardHeader>
-              <div className="flex items-center gap-3">
-                {Icon && <Icon className="w-6 h-6 text-muted-foreground" />}
-                <CardTitle className="text-xl">{project.name}</CardTitle>
-                <p className="text-sm text-muted-foreground ml-auto">
-                  {t("current_phase")}: {currentPhase}
-                </p>
+              <div className="grid lg:grid-cols-2 items-center gap-4">
+                <div className="flex justify-center lg:justify-start items-center gap-3">
+                  {Icon && <Icon className="h-6 w-6 text-muted-foreground" />}
+                  <CardTitle className="text-lg font-semibold">
+                    {project.name}
+                  </CardTitle>
+                </div>
+                <div className="flex lg:ml-auto items-center gap-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        id={`phase-dropdown-${project.id}`}
+                      >
+                        {currentPhase}
+                        <span className="sr-only">{t("toggle_phase")}</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      {project.phases.map((phase) => (
+                        <DropdownMenuItem key={phase.id}>
+                          {phase.title}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <Link
+                    to={`/tasks/${project.id}?phase=${project.phases[0].id}`}
+                    className="ml-auto"
+                  >
+                    <Button onClick={() => {}}>{t("tasks")}</Button>
+                  </Link>
+                </div>
               </div>
 
               <Progress value={overallProgress} className="mt-2" />
@@ -168,9 +227,7 @@ export default function ReportsPage() {
                     <p className="text-lg font-semibold text-muted-foreground">
                       {status.name}
                     </p>
-                    <p className="text-3xl font-bold">
-                      {status.value}
-                    </p>
+                    <p className="text-3xl font-bold">{status.value}</p>
                   </div>
                 ))}
               </div>
@@ -179,35 +236,33 @@ export default function ReportsPage() {
                 <h3 className="text-lg font-semibold mb-2">
                   {t("contributors")}
                 </h3>
-                <>
-                  <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
-                    {project.contributors.map((c) => (
-                      <HoverCard openDelay={500}>
-                        <HoverCardTrigger
-                          key={c.id}
-                          className="cursor-pointer hover:scale-120 transition-transform duration-500 hover:z-10"
-                        >
-                          <Avatar className="border border-">
-                            <AvatarImage src={c.image} alt={c.image} />
+                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                  {project.contributors.map((c) => (
+                    <HoverCard openDelay={500}>
+                      <HoverCardTrigger
+                        key={c.id}
+                        className="cursor-pointer hover:scale-120 transition-transform duration-500 hover:z-10"
+                      >
+                        <Avatar className="border border-">
+                          <AvatarImage src={c.image} alt={c.image} />
+                          <AvatarFallback>{c.name[0]}</AvatarFallback>
+                        </Avatar>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="w-auto flex flex-row">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-8 w-8 border">
+                            <AvatarImage src={c.image} alt={c.name} />
                             <AvatarFallback>{c.name[0]}</AvatarFallback>
                           </Avatar>
-                        </HoverCardTrigger>
-                        <HoverCardContent className="w-auto flex flex-row">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-8 w-8 border">
-                              <AvatarImage src={c.image} alt={c.name} />
-                              <AvatarFallback>{c.name[0]}</AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm font-medium">
-                              {c.name}
-                            </span>
-                          </div>
-                          <Badge className="ml-4" variant="secondary">{c.contribution}%</Badge>
-                        </HoverCardContent>
-                      </HoverCard>
-                    ))}
-                  </div>
-                </>
+                          <span className="text-sm font-medium">{c.name}</span>
+                        </div>
+                        <Badge className="ml-4" variant="secondary">
+                          {c.contribution}%
+                        </Badge>
+                      </HoverCardContent>
+                    </HoverCard>
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>

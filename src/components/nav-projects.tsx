@@ -14,6 +14,8 @@ import {
 
 import { useTranslation } from "@/components/language-provider"
 
+import {Link }from "react-router-dom"
+
 export function NavProjects({
   projects,
 }: {
@@ -32,10 +34,10 @@ export function NavProjects({
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+                <Link to={item.url}>
                 <item.icon />
                 <span>{item.name}</span>
-              </a>
+                </Link>
             </SidebarMenuButton>
             {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
