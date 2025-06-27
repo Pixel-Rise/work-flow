@@ -12,6 +12,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 interface SettingsSidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  className?: string;
 }
 
 // Language options
@@ -35,6 +36,7 @@ const colors = [
 export function SettingsSidebar({
   isOpen = false,
   onClose,
+  className,
 }: SettingsSidebarProps) {
   const t = useTranslation();
   const { theme, setTheme } = useTheme();
@@ -75,7 +77,7 @@ export function SettingsSidebar({
                 language === lang.code ? "ring-1 ring-primary" : ""
               }`}
             >
-              <span className="font-medium text-xs">{lang.name}</span>
+              <span className="font-medium">{lang.name}</span>
             </Button>
           ))}
         </div>
@@ -96,7 +98,7 @@ export function SettingsSidebar({
             }`}
           >
             <Sun className="h-3 w-3 mr-1" />
-            <span className="font-medium text-xs">{t("light_mode")}</span>
+            <span className="font-medium">{t("light_mode")}</span>
           </Button>
           <Button
             variant={theme === "dark" ? "default" : "outline"}
@@ -106,7 +108,7 @@ export function SettingsSidebar({
             }`}
           >
             <Moon className="h-3 w-3 mr-1" />
-            <span className="font-medium text-xs">{t("dark_mode")}</span>
+            <span className="font-medium">{t("dark_mode")}</span>
           </Button>
           <Button
             variant={theme === "system" ? "default" : "outline"}
@@ -116,7 +118,7 @@ export function SettingsSidebar({
             }`}
           >
             <SunMoon className="h-3 w-3 mr-1" />
-            <span className="font-medium text-xs">{t("system_theme")}</span>
+            <span className="font-medium">{t("system_theme")}</span>
           </Button>
         </div>
       </div>
@@ -142,7 +144,7 @@ export function SettingsSidebar({
                 <div
                   className={`w-2 h-2 rounded-full mr-1 ${color.class}`}
                 />
-                <span className="font-medium text-xs">{color.name}</span>
+                <span className="font-medium">{color.name}</span>
               </Button>
             ))}
             <Button
@@ -152,7 +154,7 @@ export function SettingsSidebar({
                 !primaryColor ? "ring-1 ring-primary" : ""
               }`}
             >
-              <span className="font-medium text-xs">{t("default")}</span>
+              <span className="font-medium">{t("default")}</span>
             </Button>
           </div>
         </div>
@@ -179,7 +181,7 @@ export function SettingsSidebar({
   // Desktop version using fixed sidebar
   return (
     <div
-      className={`fixed right-0 top-0 w-80 h-full bg-card transition-transform duration-300 ease-in-out z-50 ${
+      className={`${className || 'fixed right-0 top-0 w-80 h-full'} bg-card transition-transform duration-300 ease-in-out z-50 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >

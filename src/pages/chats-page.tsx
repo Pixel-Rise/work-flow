@@ -222,7 +222,7 @@ export default function TelegramChatPage() {
   return (
     <div className="flex h-full lg:border rounded-xl overflow-hidden">
       {/* Sidebar - Hidden on mobile when chat is selected */}
-      <div className={`${isMobile && selectedChat ? 'hidden' : 'flex'} w-full lg:md:w-80 lg:border-r bg-card flex-col`}>
+      <div className={`${isMobile && selectedChat ? 'hidden' : 'flex'} w-full lg:md:w-80 lg:border-r lg:bg-card flex-col`}>
         <CardHeader className="lg:pt-3.5 lg:pr-2 lg:pl-2 lg:h-16 lg:border-b">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

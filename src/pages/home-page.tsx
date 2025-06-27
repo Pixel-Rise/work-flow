@@ -42,6 +42,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import { toast } from "@/hooks/use-toast";
 
 type WorkMode = "on_office" | "remote";
 
@@ -335,6 +336,92 @@ export default function HomePage() {
                 )}
               </>
             )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Toast Demo Card */}
+      <Card className="p-6">
+        <CardHeader>
+          <CardTitle>Toast Notifications Demo</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <Button
+              onClick={() => toast.success("Muvaffaqiyat!", "Sizning amalingiz muvaffaqiyatli bajarildi.")}
+              variant="default"
+            >
+              Success Toast
+            </Button>
+            <Button
+              onClick={() => toast.error("Xatolik!", "So'rovingizda nimadir noto'g'ri ketdi.")}
+              variant="destructive"
+            >
+              Error Toast
+            </Button>
+            <Button
+              onClick={() => toast.warning("Ogohlantirish!", "Davom etishdan oldin ma'lumotlaringizni tekshiring.")}
+              variant="outline"
+            >
+              Warning Toast
+            </Button>
+            <Button
+              onClick={() => toast.info("Ma'lumot!", "Bu sizga foydali ma'lumot.")}
+              variant="secondary"
+            >
+              Info Toast
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <Button
+              onClick={() => {
+                const promise = new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    Math.random() > 0.5 ? resolve("Success!") : reject(new Error("Failed!"))
+                  }, 2000)
+                })
+                
+                toast.promise(promise, {
+                  loading: "Yuklanmoqda...",
+                  success: "Muvaffaqiyatli yuklandi!",
+                  error: "Yuklashda xatolik yuz berdi!"
+                })
+              }}
+              variant="outline"
+            >
+              Promise Toast
+            </Button>
+            
+            <Button
+              onClick={() => {
+                const toastId = toast.loading("Uzun jarayon boshlanmoqda...")
+                setTimeout(() => {
+                  toast.dismiss(toastId)
+                  toast.success("Jarayon yakunlandi!")
+                }, 3000)
+              }}
+              variant="outline"
+            >
+              Loading Toast
+            </Button>
+
+            <Button
+              onClick={() => {
+                toast.custom(
+                  <div className="flex items-center gap-2 p-2">
+                    <span className="text-2xl">🎉</span>
+                    <div>
+                      <div className="font-semibold">Maxsus xabar!</div>
+                      <div className="text-sm text-muted-foreground">Bu custom toast misoli</div>
+                    </div>
+                  </div>
+                )
+              }}
+              variant="outline"
+            >
+              Custom Toast
+            </Button>
           </div>
         </CardContent>
       </Card>

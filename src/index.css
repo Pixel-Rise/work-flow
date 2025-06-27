@@ -43,7 +43,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.97 0.005 285.8);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.15 0.01 285.8);
   --card: oklch(0.97 0.005 285.8);
   --card-foreground: oklch(0.15 0.01 285.8);
@@ -148,4 +148,45 @@
     opacity: 0.5;
     transform: none !important;
   }
+}
+
+/* Toast Notification Styles */
+[data-sonner-toaster] {
+  --normal-bg: oklch(var(--background));
+  --normal-text: oklch(var(--foreground));
+  --normal-border: oklch(var(--border));
+  --success-bg: oklch(var(--background));
+  --success-text: oklch(var(--foreground));
+  --error-bg: oklch(var(--background));
+  --error-text: oklch(var(--foreground));
+  --warning-bg: oklch(var(--background));
+  --warning-text: oklch(var(--foreground));
+  --info-bg: oklch(var(--background));
+  --info-text: oklch(var(--foreground));
+}
+
+[data-sonner-toast] {
+  border: 1px solid oklch(var(--border));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+[data-sonner-toast][data-type="success"] {
+  border-left: 4px solid oklch(var(--chart-1));
+}
+
+[data-sonner-toast][data-type="error"] {
+  border-left: 4px solid oklch(var(--destructive));
+}
+
+[data-sonner-toast][data-type="warning"] {
+  border-left: 4px solid oklch(var(--chart-4));
+}
+
+[data-sonner-toast][data-type="info"] {
+  border-left: 4px solid oklch(var(--chart-2));
+}
+
+[data-sonner-toast][data-type="loading"] {
+  border-left: 4px solid oklch(var(--primary));
 }
