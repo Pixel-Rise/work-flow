@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useTranslation } from "@/components/language-provider";
-import { usePageTitle } from "@/components/title-provider";
+import { useTranslation } from "@/hooks/use-language";
+import { usePageTitle } from "@/hooks/use-title";
 import { Link } from "react-router-dom";
 import {
   Accordion,

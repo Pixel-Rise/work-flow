@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ChevronsUpDown, Plus } from "lucide-react"
-import { useTranslation } from "@/components/language-provider";
+import { useTranslation } from "@/hooks/use-language";
 
 import {
   DropdownMenu,

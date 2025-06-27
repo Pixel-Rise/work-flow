@@ -43,9 +43,9 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.98 0.005 285.8);
+  --background: oklch(0.97 0.005 285.8);
   --foreground: oklch(0.15 0.01 285.8);
-  --card: oklch(0.995 0.002 285.8);
+  --card: oklch(0.97 0.005 285.8);
   --card-foreground: oklch(0.15 0.01 285.8);
   --popover: oklch(0.995 0.002 285.8);
   --popover-foreground: oklch(0.15 0.01 285.8);
@@ -116,5 +116,36 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom styles for drag and drop */
+@layer utilities {
+  .kanban-dragging {
+    position: relative !important;
+    z-index: 1000 !important;
+    pointer-events: none !important;
+  }
+  
+  .kanban-container {
+    position: relative;
+    overflow: visible !important;
+  }
+  
+  .kanban-card-container {
+    position: relative;
+  }
+
+  /* DragOverlay specific styles */
+  .dnd-kit-drag-overlay {
+    z-index: 9999 !important;
+    pointer-events: none;
+    transform-origin: 0 0;
+  }
+
+  /* Ensure dragging elements stay visible */
+  .dnd-kit-dragging {
+    opacity: 0.5;
+    transform: none !important;
   }
 }

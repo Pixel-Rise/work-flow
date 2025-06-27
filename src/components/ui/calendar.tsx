@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useRef, useEffect, useMemo, type ComponentProps } from "react";
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -19,14 +19,14 @@ function Calendar({
   components,
   selectedDates = [],
   ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+}: ComponentProps<typeof DayPicker> & {
+  buttonVariant?: ComponentProps<typeof Button>["variant"];
   selectedDates?: Date[];
 }) {
   const defaultClassNames = getDefaultClassNames();
 
   // Create modifiers for highlighted dates
-  const modifiers = React.useMemo(() => ({
+  const modifiers = useMemo(() => ({
     highlighted: selectedDates,
     ...props.modifiers
   }), [selectedDates, props.modifiers]);
@@ -181,11 +181,11 @@ function CalendarDayButton({
   day,
   modifiers,
   ...props
-}: React.ComponentProps<typeof DayButton>) {
+}: ComponentProps<typeof DayButton>) {
   const defaultClassNames = getDefaultClassNames();
 
-  const ref = React.useRef<HTMLButtonElement>(null);
-  React.useEffect(() => {
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
     if (modifiers.focused) ref.current?.focus();
   }, [modifiers.focused]);
 

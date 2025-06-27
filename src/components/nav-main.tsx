@@ -1,200 +1,63 @@
-"use client";
-
-import { ChevronRight, type LucideIcon } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Plus, type LucideIcon } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
+import {useTranslation} from "@/hooks/use-language"
 import {
   SidebarGroup,
-  SidebarGroupLabel,
+  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import { useTranslation } from "@/components/language-provider";
-import { Link, useLocation } from "react-router-dom";
-import type { Message } from "@/types/message";
+} from "@/components/ui/sidebar"
 
-type NavItem = {
-  title: string;
-  url: string;
-  icon?: LucideIcon;
-  isActive?: boolean;
-  badge?: number;
-  items?: {
-    title: string;
-    url: string;
-    icon?: string;
-    badge?: number;
-    lastMessage?: Message;
-  }[];
-};
-
-export function NavMain({ items }: { items: NavItem[] }) {
-  const t = useTranslation();
-  const { pathname } = useLocation();
-
+export function NavMain({
+  items,
+}: {
+  items: {
+    title: string
+    url: string
+    icon?: LucideIcon
+    badge?: number
+  }[]
+}) {
+  const location = useLocation()
+  const t = useTranslation()
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{t("platform")}</SidebarGroupLabel>
-      <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            {item.items ? (
-              <Collapsible
+      <SidebarGroupContent className="flex flex-col gap-2">
+        <SidebarMenu>
+          <SidebarMenuItem className="flex items-center gap-2">
+            <SidebarMenuButton
+              tooltip="Quick Create"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
+            >
+              <Plus />
+              <span>{t("quick_create")}</span>
+            </SidebarMenuButton>
+
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton 
+                tooltip={item.title} 
                 asChild
-                defaultOpen={item.isActive}
-                className="group/collapsible"
+                isActive={location.pathname === item.url}
               >
-                <>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title} asChild>
-                      <Link to={item.url} className="flex items-center gap-2 w-full">
-                        {item.icon && <item.icon />}
-                        <span>{item.title}</span>
-                        {typeof item.badge === "number" && item.badge > 0 && (
-                          <Badge className="size-5 text-xs">
-                            {item.badge > 9 ? "9+" : item.badge}
-                          </Badge>
-                        )}
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                      </Link>
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {item.items?.map((subItem) => {
-                        const isActive = pathname === subItem.url;
-                        return (
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton
-                              asChild
-                              className="h-8 items-center gap-2"
-                            >
-                              <Link
-                                to={subItem.url}
-                                className="flex items-center gap-2 w-full"
-                              >
-                                {subItem.badge ? (
-                                  <>
-                                    <HoverCard>
-                                      <HoverCardTrigger
-                                        className={`flex items-center gap-2 w-full ${
-                                          isActive
-                                            ? "text-primary font-semibold"
-                                            : ""
-                                        }`}
-                                      >
-                                        <Avatar className="h-7 w-7 border">
-                                          <AvatarImage
-                                            src={subItem.icon}
-                                            alt={subItem.icon}
-                                          />
-                                          <AvatarFallback>
-                                            {subItem.title[0]}
-                                          </AvatarFallback>
-                                        </Avatar>
-
-                                        <span className="truncate max-w-[100px] overflow-hidden whitespace-nowrap">
-                                          {subItem.title}
-                                        </span>
-                                      </HoverCardTrigger>
-
-                                      <HoverCardContent className="w-64">
-                                        <div className="flex items-center gap-2">
-                                          <Avatar className="h-8 w-8 border">
-                                            <AvatarImage
-                                              src={subItem.icon}
-                                              alt={subItem.icon}
-                                            />
-                                            <AvatarFallback>
-                                              {subItem.title[0]}
-                                            </AvatarFallback>
-                                          </Avatar>
-                                          <span
-                                            className={`text-sm ${
-                                              isActive
-                                                ? "text-primary font-semibold"
-                                                : ""
-                                            } font-medium`}
-                                          >
-                                            {subItem.title}
-                                          </span>
-                                        </div>
-                                        {subItem.lastMessage && (
-                                          <div className="mt-2 text-xs text-muted-foreground border-t pt-2">
-                                            <span className="font-medium">
-                                              {subItem.lastMessage.message}
-                                            </span>
-                                            <span className="ml-2">
-                                              {new Date(
-                                                subItem.lastMessage.createdAt
-                                              ).toLocaleTimeString([], {
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                              })}
-                                            </span>
-                                          </div>
-                                        )}
-                                      </HoverCardContent>
-                                    </HoverCard>
-
-                                    <Badge className="ml-auto size-5 text-xs">
-                                      {subItem.badge > 9 ? "9+" : subItem.badge}
-                                    </Badge>
-                                  </>
-                                ) : (
-                                  <span
-                                    className={`truncate max-w-[150px] ${
-                                      isActive ? "text-primary font-semibold" : ""
-                                    } overflow-hidden whitespace-nowrap`}
-                                  >
-                                    {subItem.title}
-                                  </span>
-                                )}
-                              </Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        );
-                      })}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </>
-              </Collapsible>
-            ) : (
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <Link
-                  to={item.url}
-                  className={`flex items-center gap-2 w-full ${
-                    pathname === item.url ? "text-primary font-semibold" : ""
-                  }`}
-                >
+                <Link to={item.url}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  {typeof item.badge === "number" && item.badge > 0 && (
-                    <Badge className="ml-auto size-5 text-xs">
-                      {item.badge > 9 ? "9+" : item.badge}
-                    </Badge>
+                  {item.badge && (
+                    <span className="ml-auto text-xs bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full">
+                      {item.badge}
+                    </span>
                   )}
                 </Link>
               </SidebarMenuButton>
-            )}
-          </SidebarMenuItem>
-        ))}
-      </SidebarMenu>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
     </SidebarGroup>
-  );
+  )
 }

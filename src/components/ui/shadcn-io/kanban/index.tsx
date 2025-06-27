@@ -1,5 +1,3 @@
-'use client';
-
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import {
@@ -7,11 +5,13 @@ import {
   rectIntersection,
   useDraggable,
   useDroppable,
+  DragOverlay,
 } from '@dnd-kit/core';
-import type { DragEndEvent } from '@dnd-kit/core';
+import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import type { ReactNode } from 'react';
+import { useState } from 'react';
 
-export type { DragEndEvent } from '@dnd-kit/core';
+export type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 
 export type Status = {
   id: string;
@@ -39,8 +39,8 @@ export const KanbanBoard = ({ id, children, className }: KanbanBoardProps) => {
   return (
     <div
       className={cn(
-        'flex h-full min-h-40 flex-col gap-2 rounded-md border bg-secondary p-2 text-xs shadow-sm outline outline-2 transition-all',
-        isOver ? 'outline-primary' : 'outline-transparent',
+        'flex h-full min-h-40 flex-col gap-2 rounded-md border bg-secondary p-2 text-xs shadow-sm transition-all relative',
+        isOver ? 'outline-2 outline-primary' : '',
         className
       )}
       ref={setNodeRef}
@@ -65,7 +65,7 @@ export const KanbanCard = ({
   children,
   className,
 }: KanbanCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
+  const { attributes, listeners, setNodeRef, isDragging } =
     useDraggable({
       id,
       data: { index, parent },
@@ -74,15 +74,10 @@ export const KanbanCard = ({
   return (
     <Card
       className={cn(
-        'rounded-md p-3 shadow-sm',
-        isDragging && 'cursor-grabbing',
+        'rounded-md p-3 shadow-sm transition-all duration-200 cursor-grab active:cursor-grabbing',
+        isDragging && 'opacity-30 scale-95',
         className
       )}
-      style={{
-        transform: transform
-          ? `translateX(${transform.x}px) translateY(${transform.y}px)`
-          : 'none',
-      }}
       {...listeners}
       {...attributes}
       ref={setNodeRef}
@@ -98,7 +93,7 @@ export type KanbanCardsProps = {
 };
 
 export const KanbanCards = ({ children, className }: KanbanCardsProps) => (
-  <div className={cn('flex flex-1 flex-col gap-2', className)}>{children}</div>
+  <div className={cn('flex flex-1 flex-col gap-2 relative', className)}>{children}</div>
 );
 
 export type KanbanHeaderProps =
@@ -127,19 +122,46 @@ export const KanbanHeader = (props: KanbanHeaderProps) =>
 export type KanbanProviderProps = {
   children: ReactNode;
   onDragEnd: (event: DragEndEvent) => void;
+  onDragStart?: (event: DragStartEvent) => void;
   className?: string;
 };
 
 export const KanbanProvider = ({
   children,
   onDragEnd,
+  onDragStart,
   className,
-}: KanbanProviderProps) => (
-  <DndContext collisionDetection={rectIntersection} onDragEnd={onDragEnd}>
-    <div
-      className={cn('grid w-full auto-cols-fr grid-flow-col gap-4', className)}
+}: KanbanProviderProps) => {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
+    onDragStart?.(event);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    setActiveId(null);
+    onDragEnd(event);
+  };
+
+  return (
+    <DndContext 
+      collisionDetection={rectIntersection} 
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
     >
-      {children}
-    </div>
-  </DndContext>
-);
+      <div
+        className={cn('grid w-full auto-cols-fr grid-flow-col gap-4', className)}
+      >
+        {children}
+      </div>
+      <DragOverlay>
+        {activeId ? (
+          <Card className="rounded-md p-3 shadow-xl cursor-grabbing opacity-95 z-50 border-2 border-primary bg-background">
+            <p className="m-0 font-medium text-sm">Moving card...</p>
+          </Card>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
+  );
+};

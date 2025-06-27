@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ShoppingCart, School, Dumbbell } from "lucide-react";
 import me from "@/assets/avatar.jpg";
-import { useTranslation } from "@/components/language-provider";
-import { usePageTitle } from "@/components/title-provider";
+import { useTranslation } from "@/hooks/use-language";
+import { usePageTitle } from "@/hooks/use-title";
 import {
   HoverCard,
   HoverCardContent,

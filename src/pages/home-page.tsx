@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslation } from "@/components/language-provider";
-import { usePageTitle } from "@/components/title-provider";
+import { useTranslation } from "@/hooks/use-language";
+import { usePageTitle } from "@/hooks/use-title";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -56,7 +54,7 @@ const taskList = [
 export default function HomePage() {
   const t = useTranslation();
   usePageTitle(t("dashboard"));
-  
+
   const [isWorking, setIsWorking] = useState(false);
   const [workMode, setWorkMode] = useState<WorkMode | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -201,7 +199,7 @@ export default function HomePage() {
     <div className="space-y-3">
       {/* Working Card with Date Range Filter */}
       <Card className="p-6">
-        <CardHeader className="grid lg:grid-cols-2 justify-center gap-2">
+        <CardHeader className="grid lg:grid-cols-2 justify-center gap-3">
           <div className="flex items-center justify-center lg:justify-start gap-2">
             <Briefcase className="w-6 h-6" />
             <CardTitle className="text-2xl">{t("working")}</CardTitle>
@@ -260,7 +258,7 @@ export default function HomePage() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-2">
             {!isWorking ? (
               <Dialog>
                 <DialogTrigger asChild>

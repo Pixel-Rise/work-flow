@@ -1,15 +1,15 @@
 import * as React from "react"
 import {
-  BookOpen,
+  BarChart3,
   LayoutDashboard,
-  School,
+  MessageSquare,
+  Umbrella,
+  FolderOpen,
+  GraduationCap,
   ShoppingCart,
   Dumbbell,
-  MessageSquareText,
-  Umbrella,
-  ChartBarBig
 } from "lucide-react"
-import { useTranslation } from "@/components/language-provider";
+import { useTranslation } from "@/hooks/use-language";
 
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
@@ -17,13 +17,11 @@ import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import  Avatar from "@/assets/avatar.jpg"
 import  TeamAvatar from "@/assets/it-forelead.jpg"
-
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -47,17 +45,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("dashboard"),
         url: "/",
         icon: LayoutDashboard,
-        isActive: true,
       },
       {
         title: t("projects"),
         url: "/projects",
-        icon: BookOpen,
+        icon: FolderOpen,
       },
       {
         title: t("reports"),
         url: "/reports",
-        icon: ChartBarBig,
+        icon: BarChart3,
       },
       {
         title: t("dayoff"),
@@ -67,7 +64,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         title: t("chats"),
         url: "/chats",
-        icon: MessageSquareText,
+        icon: MessageSquare,
         badge: 10,
       }
     ],
@@ -75,7 +72,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         name: "Digital School",
         url: "/tasks/1",
-        icon: School,
+        icon: GraduationCap,
       },
       {
         name: "SalesFlow",
@@ -89,7 +86,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
   };
-
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -102,7 +98,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
-  );
+  )
 }

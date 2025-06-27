@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import {
@@ -11,8 +9,8 @@ import {
 } from "@/components/ui/shadcn-io/kanban";
 import type { DragEndEvent } from "@/components/ui/shadcn-io/kanban";
 import { subDays } from "date-fns";
-import { useTranslation } from "@/components/language-provider";
-import { usePageTitle } from "@/components/title-provider";
+import { useTranslation } from "@/hooks/use-language";
+import { usePageTitle } from "@/hooks/use-title";
 import { ShoppingCart, School, Dumbbell } from "lucide-react";
 import me from "@/assets/avatar.jpg";
 
@@ -306,19 +304,13 @@ export default function TasksPage() {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header ma'lumotlari */}
-      {/* <div className="p-6 border-b">
-				<h1 className="text-2xl font-bold">
-					
-				</h1>
-			</div> */}
+    <div className="flex pt-2 flex-col h-full">
 
       <KanbanProvider
         onDragEnd={handleDragEnd}
-        className="flex flex-col w-full space-y-4 h-full"
+        className="flex flex-col w-full space-y-4 h-full kanban-container"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 h-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 h-full kanban-container">
           {exampleStatuses.map((status) => (
             <KanbanBoard
               key={status.id}
@@ -326,7 +318,7 @@ export default function TasksPage() {
               className="bg-card h-full flex flex-col"
             >
               <KanbanHeader name={t(status.id)} color={status.color} />
-              <KanbanCards className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800">
+              <KanbanCards className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800 kanban-card-container">
                 {filteredTasks
                   .filter((task: Task) => task.status === status.id)
                   .map((task: Task, index: number) => (

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -12,8 +10,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Badge } from "@/components/ui/badge";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import { RadialBarChart, RadialBar } from "recharts";
-import { useTranslation } from "@/components/language-provider";
-import { usePageTitle } from "@/components/title-provider";
+import { useTranslation } from "@/hooks/use-language";
+import { usePageTitle } from "@/hooks/use-title";
 import { useMemo } from "react";
 
 // ✅ Sanani normalize qilish
@@ -68,7 +66,7 @@ export default function DaysOffPage() {
   ];
 
   const chartConfig: ChartConfig = Object.fromEntries(
-    Object.entries(leaveTypes).map(([_, { label, color }]) => [
+    Object.entries(leaveTypes).map(([, { label, color }]) => [
       t(label),
       { label: t(label), color },
     ])

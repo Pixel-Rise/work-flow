@@ -1,8 +1,6 @@
-"use client";
-
 import { useState } from "react";
-import { useTranslation } from "@/components/language-provider";
-import { usePageTitle } from "@/components/title-provider";
+import { useTranslation } from "@/hooks/use-language";
+import { usePageTitle } from "@/hooks/use-title";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -222,10 +220,10 @@ export default function TelegramChatPage() {
   );
 
   return (
-    <div className="flex h-full border rounded-xl overflow-hidden">
+    <div className="flex h-full lg:border rounded-xl overflow-hidden">
       {/* Sidebar - Hidden on mobile when chat is selected */}
-      <div className={`${isMobile && selectedChat ? 'hidden' : 'flex'} w-full md:w-80 border-r bg-card flex-col`}>
-        <CardHeader className="p-3 border-b">
+      <div className={`${isMobile && selectedChat ? 'hidden' : 'flex'} w-full lg:md:w-80 lg:border-r bg-card flex-col`}>
+        <CardHeader className="lg:pt-3.5 lg:pr-2 lg:pl-2 lg:h-16 lg:border-b">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
@@ -282,7 +280,7 @@ export default function TelegramChatPage() {
       <div className={`${isMobile && !selectedChat ? 'hidden' : 'flex'} flex-1 flex-col`}>
         {selectedChat ? (
           <>
-            <CardHeader className="border-b px-6 py-3 flex bg-card flex-row items-center justify-between flex-shrink-0">
+            <CardHeader className="lg:border-b lg:h-16 lg:p-5 flex bg-card flex-row items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-3">
                 {/* Back button for mobile */}
                 <Button 
@@ -334,7 +332,7 @@ export default function TelegramChatPage() {
                       msg.isSent ? "bg-primary text-primary-foreground" : "bg-muted"
                     }`}>
                       <div>{msg.text}</div>
-                      <div className="flex justify-end gap-1 mt-1 text-[11px] text-primary-foreground">
+                      <div className="flex justify-end gap-1 mt-1 text-[11px]">
                         <span>{msg.timestamp}</span>
                         {msg.isSent && <span className={msg.isRead ? "text-blue-400" : ""}>✓✓</span>}
                       </div>
@@ -344,7 +342,7 @@ export default function TelegramChatPage() {
               </div>
             </ScrollArea>
 
-            <div className="border-t px-6 py-3 bg-card flex-shrink-0">
+            <div className="border-t p-2 lg:px-6 lg:py-3 bg-card flex-shrink-0">
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="icon"><Paperclip className="h-4 w-4" /></Button>
                 <div className="relative flex-1">
