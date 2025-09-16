@@ -11,7 +11,12 @@ import type { DragEndEvent } from "@/components/ui/shadcn-io/kanban";
 import { subDays } from "date-fns";
 import { useTranslation } from "@/hooks/use-language";
 import { usePageTitle } from "@/hooks/use-title";
-import { ShoppingCart, School, Dumbbell } from "lucide-react";
+import { ShoppingCart, School, Dumbbell, Plus, Filter } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TaskModal } from "@/components/tasks/task-modal";
+import { CreateTaskForm } from "@/components/tasks/create-task-form";
+import { TaskFilters, TaskFilterState } from "@/components/tasks/task-filters";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import me from "@/assets/avatar.jpg";
 
 const today = new Date();
@@ -25,6 +30,14 @@ interface Task {
   startAt?: Date;
   endAt?: Date;
   name: string;
+  description?: string;
+  priority?: "low" | "medium" | "high" | "urgent";
+  assigneeId?: number;
+  tags?: string[];
+  subtasks?: { id: number; title: string; completed: boolean }[];
+  checklist?: { id: number; text: string; completed: boolean }[];
+  estimatedHours?: number;
+  actualHours?: number;
 }
 
 interface Contributor {
@@ -229,6 +242,22 @@ export default function TasksPage() {
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [currentPhase, setCurrentPhase] = useState<Phase | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState<TaskFilterState>({
+    search: '',
+    projects: [],
+    assignees: [],
+    priorities: [],
+    statuses: [],
+    tags: [],
+    dateRange: {},
+    showCompleted: true,
+    showArchived: false
+  });
+
   const params = useParams();
   const [searchParams] = useSearchParams();
 
@@ -263,9 +292,63 @@ export default function TasksPage() {
       setCurrentPhase(null);
     }
 
-    setFilteredTasks(filtered);
     setTasks(filtered);
+    applyFilters(filtered);
   }, [projectId, phaseId]);
+
+  // Apply filters to tasks
+  const applyFilters = (tasksToFilter: Task[]) => {
+    let filtered = [...tasksToFilter];
+
+    // Search filter
+    if (filters.search) {
+      const search = filters.search.toLowerCase();
+      filtered = filtered.filter(task =>
+        task.name.toLowerCase().includes(search) ||
+        task.description?.toLowerCase().includes(search)
+      );
+    }
+
+    // Status filter
+    if (filters.statuses.length > 0) {
+      filtered = filtered.filter(task =>
+        filters.statuses.includes(task.status as any)
+      );
+    }
+
+    // Priority filter
+    if (filters.priorities.length > 0) {
+      filtered = filtered.filter(task =>
+        task.priority && filters.priorities.includes(task.priority)
+      );
+    }
+
+    // Assignee filter
+    if (filters.assignees.length > 0) {
+      filtered = filtered.filter(task =>
+        task.assigneeId && filters.assignees.includes(task.assigneeId)
+      );
+    }
+
+    // Tags filter
+    if (filters.tags.length > 0) {
+      filtered = filtered.filter(task =>
+        task.tags && task.tags.some(tag => filters.tags.includes(tag))
+      );
+    }
+
+    // Show completed filter
+    if (!filters.showCompleted) {
+      filtered = filtered.filter(task => task.status !== 'done');
+    }
+
+    setFilteredTasks(filtered);
+  };
+
+  // Re-apply filters when filters change
+  useEffect(() => {
+    applyFilters(tasks);
+  }, [filters, tasks]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -286,7 +369,51 @@ export default function TasksPage() {
     );
 
     setTasks(updatedTasks);
-    setFilteredTasks(updatedTasks);
+    applyFilters(updatedTasks);
+  };
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setIsTaskModalOpen(true);
+  };
+
+  const handleTaskCreate = (taskData: any) => {
+    const newTask: Task = {
+      id: Date.now(),
+      name: taskData.title,
+      title: taskData.title,
+      description: taskData.description,
+      status: 'to_do',
+      projectId: projectId!,
+      phaseId: phaseId || 1,
+      priority: taskData.priority,
+      assigneeId: taskData.assigneeId,
+      tags: taskData.tags,
+      startAt: taskData.startDate,
+      endAt: taskData.dueDate,
+      estimatedHours: taskData.estimatedHours,
+    };
+
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+    applyFilters(updatedTasks);
+    setIsCreateTaskOpen(false);
+  };
+
+  const handleTaskUpdate = (taskId: number, updates: Partial<Task>) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === taskId ? { ...task, ...updates } : task
+    );
+    setTasks(updatedTasks);
+    applyFilters(updatedTasks);
+  };
+
+  const handleTaskDelete = (taskId: number) => {
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
+    applyFilters(updatedTasks);
+    setIsTaskModalOpen(false);
+    setSelectedTask(null);
   };
 
   // Set page title
@@ -305,7 +432,59 @@ export default function TasksPage() {
 
   return (
     <div className="flex pt-2 flex-col h-full">
+      {/* Header with Actions */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold">
+            {currentProject?.name} {currentPhase && `- ${currentPhase.title}`}
+          </h1>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            {t("filters")}
+          </Button>
+        </div>
 
+        <Dialog open={isCreateTaskOpen} onOpenChange={setIsCreateTaskOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              {t("createTask")}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>{t("createNewTask")}</DialogTitle>
+            </DialogHeader>
+            <CreateTaskForm
+              projectId={projectId!}
+              phaseId={phaseId}
+              onSubmit={handleTaskCreate}
+              onCancel={() => setIsCreateTaskOpen(false)}
+            />
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {/* Filters */}
+      {showFilters && (
+        <div className="mb-4">
+          <TaskFilters
+            filters={filters}
+            onFiltersChange={setFilters}
+            variant="default"
+            availableProjects={sampleProjects.map(p => ({ id: p.id, name: p.name }))}
+            availableAssignees={sampleProjects.flatMap(p => p.contributors).map(c => ({ id: c.id, name: c.name, avatar: c.image }))}
+            availableTags={['urgent', 'bug', 'feature', 'improvement', 'docs']}
+            className="bg-card p-4 rounded-lg border"
+          />
+        </div>
+      )}
+
+      {/* Kanban Board */}
       <KanbanProvider
         onDragEnd={handleDragEnd}
         className="flex flex-col w-full space-y-4 h-full kanban-container"
@@ -329,15 +508,45 @@ export default function TasksPage() {
                       parent={status.id}
                       index={index}
                       className="cursor-pointer bg-accent mb-2"
+                      onClick={() => handleTaskClick(task)}
                     >
-                    
                       <div className="flex items-center justify-between">
                         <div className="text-sm font-medium">{task.name}</div>
+                        {task.priority && (
+                          <div className={`w-2 h-2 rounded-full ${
+                            task.priority === 'urgent' ? 'bg-red-500' :
+                            task.priority === 'high' ? 'bg-orange-500' :
+                            task.priority === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
+                          }`} />
+                        )}
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {shortDateFormatter.format(task.startAt)} -{" "}
-                        {dateFormatter.format(task.endAt)}
-                      </div>
+
+                      {task.description && (
+                        <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                          {task.description}
+                        </div>
+                      )}
+
+                      {(task.startAt || task.endAt) && (
+                        <div className="text-xs text-muted-foreground mt-2">
+                          {task.startAt && shortDateFormatter.format(task.startAt)} -{" "}
+                          {task.endAt && dateFormatter.format(task.endAt)}
+                        </div>
+                      )}
+
+                      {task.tags && task.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {task.tags.slice(0, 2).map((tag, i) => (
+                            <span key={i} className="inline-block px-1 py-0.5 text-xs bg-primary/10 text-primary rounded">
+                              {tag}
+                            </span>
+                          ))}
+                          {task.tags.length > 2 && (
+                            <span className="text-xs text-muted-foreground">+{task.tags.length - 2}</span>
+                          )}
+                        </div>
+                      )}
+
                       <div className="text-xs text-muted-foreground mt-1">
                         Project: {task.projectId} | Phase: {task.phaseId}
                       </div>
@@ -348,6 +557,41 @@ export default function TasksPage() {
           ))}
         </div>
       </KanbanProvider>
+
+      {/* Task Modal */}
+      {selectedTask && (
+        <TaskModal
+          task={{
+            id: selectedTask.id.toString(),
+            title: selectedTask.name,
+            description: selectedTask.description || '',
+            status: selectedTask.status,
+            priority: selectedTask.priority || 'medium',
+            assignee: selectedTask.assigneeId ? {
+              id: selectedTask.assigneeId.toString(),
+              name: sampleProjects.flatMap(p => p.contributors).find(c => c.id === selectedTask.assigneeId)?.name || 'Unknown',
+              avatar: sampleProjects.flatMap(p => p.contributors).find(c => c.id === selectedTask.assigneeId)?.image
+            } : undefined,
+            dueDate: selectedTask.endAt,
+            tags: selectedTask.tags || [],
+            project: {
+              id: selectedTask.projectId.toString(),
+              name: currentProject?.name || 'Unknown Project'
+            },
+            subtasks: selectedTask.subtasks || [],
+            checklist: selectedTask.checklist || [],
+            estimatedHours: selectedTask.estimatedHours,
+            actualHours: selectedTask.actualHours
+          }}
+          isOpen={isTaskModalOpen}
+          onClose={() => {
+            setIsTaskModalOpen(false);
+            setSelectedTask(null);
+          }}
+          onUpdate={(updates) => handleTaskUpdate(selectedTask.id, updates)}
+          onDelete={() => handleTaskDelete(selectedTask.id)}
+        />
+      )}
     </div>
   );
 }

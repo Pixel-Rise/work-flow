@@ -44,6 +44,14 @@ import {
 } from "recharts";
 import { toast } from "@/hooks/use-toast";
 
+// Dashboard Components
+import { PauseReasonModal } from "@/components/dashboard/pause-reason-modal";
+import { DashboardStats } from "@/components/dashboard/dashboard-stats";
+import { ProductivityChart } from "@/components/dashboard/productivity-chart";
+import { TaskProgressWidget } from "@/components/dashboard/task-progress-widget";
+import { TeamActivityFeed } from "@/components/dashboard/team-activity-feed";
+import { QuickActions } from "@/components/dashboard/quick-actions";
+
 type WorkMode = "on_office" | "remote";
 
 const taskList = [
@@ -63,6 +71,7 @@ export default function HomePage() {
   const [isPaused, setIsPaused] = useState(false);
   const [pauseReason, setPauseReason] = useState("");
   const [showPauseDialog, setShowPauseDialog] = useState(false);
+  const [showPauseReasonModal, setShowPauseReasonModal] = useState(false);
 
   // Time range filter
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -139,8 +148,13 @@ export default function HomePage() {
   };
 
   const handlePause = () => {
+    setShowPauseReasonModal(true);
+  };
+
+  const handlePauseConfirm = (reason: string, customNote?: string) => {
     setIsPaused(true);
-    setShowPauseDialog(true);
+    setPauseReason(`${reason}${customNote ? ` - ${customNote}` : ''}`);
+    // console.log('Pause reason:', reason, customNote);
   };
 
   const handleResume = () => {
@@ -197,7 +211,10 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
+      {/* Dashboard Statistics */}
+      <DashboardStats />
+
       {/* Working Card with Date Range Filter */}
       <Card className="p-6">
         <CardHeader className="grid lg:grid-cols-2 justify-center gap-3">
@@ -378,7 +395,7 @@ export default function HomePage() {
               onClick={() => {
                 const promise = new Promise((resolve, reject) => {
                   setTimeout(() => {
-                    Math.random() > 0.5 ? resolve("Success!") : reject(new Error("Failed!"))
+                    Math.random() > 0.5 ? resolve("Success!") : reject(new Error("Failed!"));
                   }, 2000)
                 })
                 
@@ -426,6 +443,13 @@ export default function HomePage() {
         </CardContent>
       </Card>
 
+      {/* Pause Reason Modal */}
+      <PauseReasonModal
+        open={showPauseReasonModal}
+        onOpenChange={setShowPauseReasonModal}
+        onConfirm={handlePauseConfirm}
+      />
+
       <Dialog open={showPauseDialog} onOpenChange={setShowPauseDialog}>
         <DialogContent>
           <DialogHeader>
@@ -451,32 +475,22 @@ export default function HomePage() {
         </DialogContent>
       </Dialog>
 
-      <div className="grid lg:grid-cols-2  gap-3">
-        {/* Assigned tasks */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("your_tasks")}</CardTitle>
-          </CardHeader>
-          <Separator />
-          <CardContent className="space-y-3">
-            {taskList.map((task) => (
-              <div
-                key={task.id}
-                className="flex justify-between items-center p-2 rounded border hover:bg-muted"
-              >
-                <div className="text-sm font-medium">{task.title}</div>
-                <Badge
-                  variant={
-                    task.status === "in_progress" ? "default" : "outline"
-                  }
-                >
-                  {t(task.status)}
-                </Badge>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+      {/* Productivity Charts */}
+      <ProductivityChart />
 
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Task Progress Widget */}
+        <TaskProgressWidget />
+
+        {/* Team Activity Feed */}
+        <TeamActivityFeed />
+
+        {/* Quick Actions */}
+        <QuickActions />
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-3">
+        {/* Original Weekly Chart for comparison */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -506,6 +520,31 @@ export default function HomePage() {
                 </BarChart>
               </ResponsiveContainer>
             </ChartContainer>
+          </CardContent>
+        </Card>
+
+        {/* Assigned tasks */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("your_tasks")}</CardTitle>
+          </CardHeader>
+          <Separator />
+          <CardContent className="space-y-3">
+            {taskList.map((task) => (
+              <div
+                key={task.id}
+                className="flex justify-between items-center p-2 rounded border hover:bg-muted"
+              >
+                <div className="text-sm font-medium">{task.title}</div>
+                <Badge
+                  variant={
+                    task.status === "in_progress" ? "default" : "outline"
+                  }
+                >
+                  {t(task.status)}
+                </Badge>
+              </div>
+            ))}
           </CardContent>
         </Card>
       </div>
