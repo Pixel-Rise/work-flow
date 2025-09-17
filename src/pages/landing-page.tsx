@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "@/hooks/use-language";
+import { useTranslation } from "@/hooks/use-translation";
 import { 
   Users, 
   Target, 
@@ -19,7 +19,7 @@ import {
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   // Project features for the work management system
   const projectFeatures = [

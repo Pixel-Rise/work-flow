@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useTranslation } from "@/hooks/use-language";
+import { useTranslation } from "@/hooks/use-translation";
 import {
   Tag,
   X,
@@ -23,6 +23,7 @@ import {
   Hash,
   ChevronDown,
   Check,
+  CheckCircle,
   Palette,
   Star,
   AlertCircle,
@@ -154,7 +155,7 @@ export function TaskTagsInput({
   tagColors,
   className
 }: TaskTagsInputProps) {
-  const t = useTranslation();
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
