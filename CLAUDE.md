@@ -68,9 +68,28 @@ src/
 - TanStack Query for caching, synchronization, and background updates
 - Service layer pattern in `src/services/` for API abstraction
 
+### Environment Configuration
+- **Environment Variables**: Uses `VITE_API_URL` for API base URL configuration
+- **Development Server**: Configured for ngrok tunneling with allowed hosts
+- **Path Aliases**: `@/*` maps to `src/*` (configured in both Vite and TypeScript)
+
+### Token-Based Authentication Flow
+- **Access Token**: Stored in localStorage, attached to requests via Axios interceptor
+- **Refresh Token**: Used for automatic token renewal when access token expires
+- **Route Protection**: Loader functions (`authLoader`, `loginLoader`, `publicLoader`) handle authentication state
+- **Automatic Refresh**: 403 responses trigger token refresh attempt before redirecting to login
+
+### Key Architectural Patterns
+- **Provider Pattern**: Multiple nested providers (Theme, PrimaryColor, Title, Language, Query)
+- **Loader-Based Navigation**: React Router v7 loaders for authentication and route protection
+- **Service Layer**: API abstraction in `src/services/` with separate axios clients for auth/public
+- **Context Providers**: Custom providers for themes, languages, colors, and page titles
+- **Compound Components**: Complex UI components built using composition patterns
+
 ### Development Notes
 - Uses SWC for fast compilation
-- ESLint configuration with React and TypeScript rules
+- ESLint configuration with React and TypeScript rules  
 - Vite configured with path resolution and ngrok support for development
 - No test framework currently configured
 - Custom toast system documented in TOAST_GUIDE.md (in Uzbek language)
+- **shadcn/ui**: New York style components with Lucide icons and zinc base color

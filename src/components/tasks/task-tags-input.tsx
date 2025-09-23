@@ -61,7 +61,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "frontend",
     label: "Frontend",
-    color: "bg-blue-100 text-blue-800 border-blue-200",
+    color: "bg-primary/10 text-primary border-primary/20",
     category: "Development",
     icon: Code,
     description: "User interface development"
@@ -69,7 +69,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "backend",
     label: "Backend",
-    color: "bg-green-100 text-green-800 border-green-200",
+    color: "bg-chart-1/10 text-chart-1 border-chart-1/20",
     category: "Development",
     icon: Code,
     description: "Server-side development"
@@ -77,7 +77,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "bug",
     label: "Bug",
-    color: "bg-red-100 text-red-800 border-red-200",
+    color: "bg-destructive/10 text-destructive border-destructive/20",
     category: "Issue",
     icon: Bug,
     description: "Bug fix or error resolution"
@@ -85,7 +85,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "feature",
     label: "Feature",
-    color: "bg-purple-100 text-purple-800 border-purple-200",
+    color: "bg-chart-3/10 text-chart-3 border-chart-3/20",
     category: "Enhancement",
     icon: Lightbulb,
     description: "New feature development"
@@ -93,7 +93,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "urgent",
     label: "Urgent",
-    color: "bg-red-100 text-red-800 border-red-200",
+    color: "bg-destructive/10 text-destructive border-destructive/20",
     category: "Priority",
     icon: Zap,
     description: "Requires immediate attention"
@@ -101,7 +101,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "documentation",
     label: "Documentation",
-    color: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    color: "bg-chart-4/10 text-chart-4 border-chart-4/20",
     category: "Content",
     icon: Star,
     description: "Documentation updates"
@@ -109,7 +109,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "testing",
     label: "Testing",
-    color: "bg-orange-100 text-orange-800 border-orange-200",
+    color: "bg-chart-4/10 text-chart-4 border-chart-4/20",
     category: "QA",
     icon: CheckCircle,
     description: "Testing and quality assurance"
@@ -117,7 +117,7 @@ const defaultPredefinedTags: TagOption[] = [
   {
     id: "design",
     label: "Design",
-    color: "bg-pink-100 text-pink-800 border-pink-200",
+    color: "bg-chart-5/10 text-chart-5 border-chart-5/20",
     category: "UI/UX",
     icon: Palette,
     description: "Design and user experience"
@@ -176,14 +176,14 @@ export function TaskTagsInput({
     }, 0);
 
     const colors = [
-      "bg-blue-100 text-blue-800 border-blue-200",
-      "bg-green-100 text-green-800 border-green-200",
-      "bg-purple-100 text-purple-800 border-purple-200",
-      "bg-orange-100 text-orange-800 border-orange-200",
-      "bg-pink-100 text-pink-800 border-pink-200",
-      "bg-indigo-100 text-indigo-800 border-indigo-200",
-      "bg-teal-100 text-teal-800 border-teal-200",
-      "bg-cyan-100 text-cyan-800 border-cyan-200"
+      "bg-primary/10 text-primary border-primary/20",
+      "bg-chart-1/10 text-chart-1 border-chart-1/20",
+      "bg-chart-2/10 text-chart-2 border-chart-2/20",
+      "bg-chart-3/10 text-chart-3 border-chart-3/20",
+      "bg-chart-4/10 text-chart-4 border-chart-4/20",
+      "bg-chart-5/10 text-chart-5 border-chart-5/20",
+      "bg-secondary text-secondary-foreground border-border",
+      "bg-accent text-accent-foreground border-border"
     ];
 
     return colors[Math.abs(hash) % colors.length];

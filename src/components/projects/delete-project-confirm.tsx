@@ -60,8 +60,8 @@ export function DeleteProjectConfirm({
       <AlertDialogContent>
         <AlertDialogHeader>
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-destructive/10">
+              <AlertTriangle className="w-6 h-6 text-destructive" />
             </div>
             <div className="flex-1">
               <AlertDialogTitle className="text-left">
@@ -76,13 +76,13 @@ export function DeleteProjectConfirm({
 
         {/* Project Details */}
         <div className="space-y-4 py-4">
-          <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="p-4 bg-destructive/5 border border-destructive/20 rounded-lg">
             <div className="flex items-start gap-3">
-              <Trash2 className="w-5 h-5 text-red-600 mt-0.5" />
+              <Trash2 className="w-5 h-5 text-destructive mt-0.5" />
               <div className="flex-1">
-                <h4 className="font-semibold text-red-900">{project.name}</h4>
+                <h4 className="font-semibold text-destructive">{project.name}</h4>
                 {project.description && (
-                  <p className="text-sm text-red-700 mt-1">{project.description}</p>
+                  <p className="text-sm text-destructive/80 mt-1">{project.description}</p>
                 )}
               </div>
             </div>
@@ -96,8 +96,8 @@ export function DeleteProjectConfirm({
               </h5>
               <div className="grid grid-cols-2 gap-3">
                 {project.taskCount !== undefined && project.taskCount > 0 && (
-                  <div className="flex items-center gap-2 p-2 bg-orange-50 rounded border">
-                    <Target className="w-4 h-4 text-orange-600" />
+                  <div className="flex items-center gap-2 p-2 bg-chart-4/10 rounded border border-chart-4/20">
+                    <Target className="w-4 h-4 text-chart-4" />
                     <span className="text-sm">
                       <strong>{project.taskCount}</strong> {t("tasks")}
                     </span>
@@ -105,8 +105,8 @@ export function DeleteProjectConfirm({
                 )}
 
                 {project.teamMemberCount !== undefined && project.teamMemberCount > 0 && (
-                  <div className="flex items-center gap-2 p-2 bg-blue-50 rounded border">
-                    <Users className="w-4 h-4 text-blue-600" />
+                  <div className="flex items-center gap-2 p-2 bg-primary/10 rounded border border-primary/20">
+                    <Users className="w-4 h-4 text-primary" />
                     <span className="text-sm">
                       <strong>{project.teamMemberCount}</strong> {t("members")}
                     </span>
@@ -114,8 +114,8 @@ export function DeleteProjectConfirm({
                 )}
 
                 {project.phaseCount !== undefined && project.phaseCount > 0 && (
-                  <div className="flex items-center gap-2 p-2 bg-purple-50 rounded border">
-                    <Calendar className="w-4 h-4 text-purple-600" />
+                  <div className="flex items-center gap-2 p-2 bg-chart-3/10 rounded border border-chart-3/20">
+                    <Calendar className="w-4 h-4 text-chart-3" />
                     <span className="text-sm">
                       <strong>{project.phaseCount}</strong> {t("phases")}
                     </span>
@@ -123,8 +123,8 @@ export function DeleteProjectConfirm({
                 )}
 
                 {project.documentCount !== undefined && project.documentCount > 0 && (
-                  <div className="flex items-center gap-2 p-2 bg-green-50 rounded border">
-                    <FileX className="w-4 h-4 text-green-600" />
+                  <div className="flex items-center gap-2 p-2 bg-chart-1/10 rounded border border-chart-1/20">
+                    <FileX className="w-4 h-4 text-chart-1" />
                     <span className="text-sm">
                       <strong>{project.documentCount}</strong> {t("documents")}
                     </span>
@@ -159,10 +159,10 @@ export function DeleteProjectConfirm({
           )}
 
           {/* Warning Message */}
-          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <div className="p-4 bg-chart-4/10 border border-chart-4/20 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5" />
-              <div className="text-sm text-yellow-800">
+              <AlertTriangle className="w-5 h-5 text-chart-4 mt-0.5" />
+              <div className="text-sm text-chart-4">
                 <p className="font-medium mb-1">{t("warning")}!</p>
                 <ul className="space-y-1 text-sm">
                   <li>• {t("delete_warning_permanent")}</li>
@@ -188,7 +188,7 @@ export function DeleteProjectConfirm({
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
-            className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+            className="bg-destructive hover:bg-destructive/90 focus:ring-destructive"
           >
             <Trash2 className="w-4 h-4 mr-2" />
             {t("delete_forever")}

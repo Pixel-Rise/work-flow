@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@/hooks/use-language";
 import { 
   Users, 
   Target, 
@@ -19,48 +19,48 @@ import {
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const t = useTranslation();
 
   // Project features for the work management system
   const projectFeatures = [
     {
-      title: t("time_tracking") || "Vaqt Hisobi",
-      description: t("time_tracking_desc") || "Ish vaqtlarini aniq hisoblab borish va nazorat qilish",
+      title: t("time_tracking"),
+      description: t("time_tracking_desc"),
       icon: <Users className="h-12 w-12" />,
       benefits: [
-        t("accurate_time_tracking") || "Aniq vaqt hisobi", 
-        t("salary_calculation") || "Mehnat haqi hisoblash", 
-        t("work_efficiency") || "Ish samaradorligi"
+        t("accurate_time_tracking"), 
+        t("salary_calculation"), 
+        t("work_efficiency")
       ]
     },
     {
-      title: t("project_management") || "Loyiha Boshqaruvi", 
-      description: t("project_management_desc") || "Loyihalarni samarali boshqarish va kuzatish",
+      title: t("project_management"), 
+      description: t("project_management_desc"),
       icon: <Target className="h-12 w-12" />,
       benefits: [
-        t("task_distribution") || "Vazifalar taqsimi", 
-        t("deadline_control") || "Muddatlar nazorati", 
-        t("results_analysis") || "Natijalar tahlili"
+        t("task_distribution"), 
+        t("deadline_control"), 
+        t("results_analysis")
       ]
     },
     {
-      title: t("team_collaboration") || "Jamoaviy Hamkorlik",
-      description: t("team_collaboration_desc") || "Jamoa a'zolari o'rtasida samarali hamkorlik",
+      title: t("team_collaboration"),
+      description: t("team_collaboration_desc"),
       icon: <Zap className="h-12 w-12" />,
       benefits: [
-        t("chat_system") || "Chat tizimi", 
-        t("file_sharing") || "Fayl almashish", 
-        t("collaborative_work") || "Birgalikda ishlash"
+        t("chat_system"), 
+        t("file_sharing"), 
+        t("collaborative_work")
       ]
     },
     {
-      title: t("reports_analytics") || "Hisobot va Tahlil",
-      description: t("reports_analytics_desc") || "Detektiv hisobotlar va ishlash ko'rsatkichlari",
+      title: t("reports_analytics"),
+      description: t("reports_analytics_desc"),
       icon: <CheckCircle className="h-12 w-12" />,
       benefits: [
-        t("daily_reports") || "Kunlik hisobotlar", 
-        t("statistics") || "Statistika", 
-        t("performance_analysis") || "Performance tahlili"
+        t("daily_reports"), 
+        t("statistics"), 
+        t("performance_analysis")
       ]
     }
   ];
@@ -68,33 +68,33 @@ const LandingPage: React.FC = () => {
   const benefits = [
     {
       icon: <Users className="h-8 w-8" />,
-      title: t("team_collaboration") || "Jamoaviy Hamkorlik",
-      description: t("real_time_collaboration") || "Real vaqtda jamoaviy ishlash va kommunikatsiya"
+      title: t("team_collaboration"),
+      description: t("real_time_collaboration")
     },
     {
       icon: <Target className="h-8 w-8" />,
-      title: t("clear_goals") || "Aniq Maqsadlar", 
-      description: t("clear_goals_desc") || "Har bir vazifa va loyiha uchun aniq maqsadlar"
+      title: t("clear_goals"), 
+      description: t("clear_goals_desc")
     },
     {
       icon: <Zap className="h-8 w-8" />,
-      title: t("fast_efficient") || "Tez va Samarali",
-      description: t("fast_efficient_desc") || "Zamonaviy texnologiyalar bilan tez natijalar"
+      title: t("fast_efficient"),
+      description: t("fast_efficient_desc")
     },
     {
       icon: <Shield className="h-8 w-8" />,
-      title: t("data_security") || "Ma'lumot Xavfsizligi",
-      description: t("data_security_desc") || "Ishchi ma'lumotlari to'liq himoyalangan"
+      title: t("data_security"),
+      description: t("data_security_desc")
     },
     {
       icon: <Globe className="h-8 w-8" />,
-      title: t("remote_work") || "Masofaviy Ishlash",
-      description: t("remote_work_desc") || "Istalgan joydan ishlash imkoniyati"
+      title: t("remote_work"),
+      description: t("remote_work_desc")
     },
     {
       icon: <CheckCircle className="h-8 w-8" />,
-      title: t("guaranteed_results") || "Natija Kafolati",
-      description: t("guaranteed_results_desc") || "Ish samaradorligini oshirish kafolatlanadi"
+      title: t("guaranteed_results"),
+      description: t("guaranteed_results_desc")
     }
   ];
 
@@ -104,22 +104,22 @@ const LandingPage: React.FC = () => {
       <section className="relative py-8 sm:py-12 md:py-16 lg:py-20 px-3 sm:px-4 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
         <div className="w-full max-w-7xl mx-auto text-center">
           <Badge variant="secondary" className="mb-3 sm:mb-4 text-xs px-3 py-1">
-            {t("work_management_system") || "Ish Boshqaruv Tizimi"}
+            {t("work_management_system")}
           </Badge>
           <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent leading-tight px-2">
-            {t("workflow_dashboard") || "WorkFlow Dashboard"}
+            {t("workflow_dashboard")}
           </h1>
           <p className="text-sm xs:text-base sm:text-lg md:text-xl text-muted-foreground mb-5 sm:mb-6 md:mb-8 max-w-xs xs:max-w-sm sm:max-w-lg md:max-w-2xl mx-auto px-3 leading-relaxed">
-            {t("landing_hero_description") || "Jamoaviy ish muhitini yaxshi taminlash va ish vaqtlarini aniq hisoblab borish uchun mo'ljallangan zamonaviy boshqaruv tizimi."}
+            {t("landing_hero_description")}
           </p>
           <div className="flex flex-col gap-3 justify-center items-center w-full max-w-xs xs:max-w-sm sm:max-w-none mx-auto px-3 sm:px-0 sm:flex-row sm:gap-4">
             <Button size="lg" onClick={() => navigate("/login")} className="w-full sm:w-auto text-sm sm:text-base">
               <Briefcase className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-              {t("enter_system") || "Tizimga kirish"}
+              {t("enter_system")}
             </Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto text-sm sm:text-base">
               <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-              {t("view_demo") || "Demo ko'rish"}
+              {t("view_demo")}
             </Button>
           </div>
         </div>
@@ -130,10 +130,10 @@ const LandingPage: React.FC = () => {
         <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16">
             <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 px-3">
-              {t("main_features") || "Asosiy Imkoniyatlar"}
+              {t("main_features")}
             </h2>
             <p className="text-xs xs:text-sm sm:text-base text-muted-foreground max-w-xs xs:max-w-sm sm:max-w-lg md:max-w-2xl mx-auto px-3 leading-relaxed">
-              {t("main_features_desc") || "Ish jarayonlarini samarali boshqarish va ish vaqtlarini aniq hisoblab borish uchun mo'ljallangan keng imkoniyatlar."}
+              {t("main_features_desc")}
             </p>
           </div>
           
@@ -205,7 +205,7 @@ const LandingPage: React.FC = () => {
             {/* Navigation Hint */}
             <div className="text-center mt-4 sm:mt-6">
               <p className="text-xs sm:text-sm text-muted-foreground px-2">
-                {t("navigation_hint") || "← → tugmalar yoki sichqoncha bilan harakatlantiring"}
+                {t("navigation_hint")}
               </p>
             </div>
           </div>
@@ -217,10 +217,10 @@ const LandingPage: React.FC = () => {
         <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16">
             <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 px-3">
-              {t("why_workflow_dashboard") || "Nima uchun WorkFlow Dashboard?"}
+              {t("why_workflow_dashboard")}
             </h2>
             <p className="text-xs xs:text-sm sm:text-base text-muted-foreground max-w-xs xs:max-w-sm sm:max-w-lg md:max-w-2xl mx-auto px-3 leading-relaxed">
-              {t("why_workflow_dashboard_desc") || "Bizning tizimimiz ish jarayonlarini osonlashtiradi va jamoaviy samaradorlikni sezilarli darajada oshiradi."}
+              {t("why_workflow_dashboard_desc")}
             </p>
           </div>
           
@@ -253,25 +253,25 @@ const LandingPage: React.FC = () => {
             <div className="p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1">99.9%</div>
               <div className="text-xs text-muted-foreground px-1 leading-tight">
-                {t("system_uptime") || "Tizim ishlash vaqti"}
+                {t("system_uptime")}
               </div>
             </div>
             <div className="p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1">45%</div>
               <div className="text-xs text-muted-foreground px-1 leading-tight">
-                {t("efficiency_increase") || "Ish samaradorligi oshishi"}
+                {t("efficiency_increase")}
               </div>
             </div>
             <div className="p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1">24/7</div>
               <div className="text-xs text-muted-foreground px-1 leading-tight">
-                {t("technical_support") || "Texnik yordam"}
+                {t("technical_support")}
               </div>
             </div>
             <div className="p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1">30s</div>
               <div className="text-xs text-muted-foreground px-1 leading-tight">
-                {t("average_response_time") || "O'rtacha javob vaqti"}
+                {t("average_response_time")}
               </div>
             </div>
           </div>
@@ -282,19 +282,19 @@ const LandingPage: React.FC = () => {
       <section className="py-8 sm:py-12 md:py-16 lg:py-20 px-3 sm:px-4">
         <div className="w-full max-w-7xl mx-auto text-center">
           <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 px-3">
-            {t("try_system") || "Tizimni sinab ko'ring"}
+            {t("try_system")}
           </h2>
           <p className="text-xs xs:text-sm sm:text-base text-muted-foreground mb-5 sm:mb-6 md:mb-8 max-w-xs xs:max-w-sm sm:max-w-lg md:max-w-2xl mx-auto px-3 leading-relaxed">
-            {t("try_system_desc") || "WorkFlow Dashboard bilan tanishish uchun demo versiyani sinab ko'ring yoki texnik yordam uchun biz bilan bog'laning."}
+            {t("try_system_desc")}
           </p>
           <div className="flex flex-col gap-3 justify-center items-center w-full max-w-xs xs:max-w-sm sm:max-w-none mx-auto px-3 sm:px-0 sm:flex-row sm:gap-4">
             <Button size="lg" onClick={() => navigate("/login")} className="w-full sm:w-auto text-sm sm:text-base">
               <Phone className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-              {t("free_trial") || "Bepul sinab ko'rish"}
+              {t("free_trial")}
             </Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto text-sm sm:text-base">
               <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-              {t("need_help") || "Yordam kerak"}
+              {t("need_help")}
             </Button>
           </div>
         </div>
@@ -304,7 +304,7 @@ const LandingPage: React.FC = () => {
       <footer className="py-4 sm:py-6 md:py-8 px-3 sm:px-4 border-t bg-muted/30">
         <div className="w-full max-w-7xl mx-auto text-center text-xs text-muted-foreground">
           <p className="px-2 leading-relaxed">
-            &copy; 2025 {t("workflow_dashboard") || "WorkFlow Dashboard"}. {t("footer_tagline") || "Jamoaviy ish samaradorligi uchun yaratilgan."}
+            &copy; 2025 {t("workflow_dashboard")}. {t("footer_tagline")}
           </p>
         </div>
       </footer>

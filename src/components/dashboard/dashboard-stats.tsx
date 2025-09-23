@@ -71,7 +71,7 @@ export function DashboardStats() {
       subtitle: t("this_week"),
       icon: Clock,
       trend: { value: 12, isPositive: true },
-      color: "text-blue-600"
+      color: "text-primary"
     },
     {
       title: t("completed_tasks"),
@@ -79,7 +79,7 @@ export function DashboardStats() {
       subtitle: "8 " + t("this_week"),
       icon: CheckCircle,
       trend: { value: 8, isPositive: true },
-      color: "text-green-600"
+      color: "text-chart-1"
     },
     {
       title: t("active_projects"),
@@ -87,14 +87,14 @@ export function DashboardStats() {
       subtitle: "2 " + t("due_this_week"),
       icon: Target,
       trend: { value: 25, isPositive: true },
-      color: "text-purple-600"
+      color: "text-chart-3"
     },
     {
       title: t("team_members"),
       value: 12,
       subtitle: "3 " + t("online_now"),
       icon: Users,
-      color: "text-orange-600"
+      color: "text-chart-4"
     },
     {
       title: t("productivity_score"),
@@ -102,7 +102,7 @@ export function DashboardStats() {
       subtitle: t("above_average"),
       icon: TrendingUp,
       trend: { value: 5, isPositive: true },
-      color: "text-emerald-600"
+      color: "text-chart-1"
     },
     {
       title: t("pending_tasks"),
@@ -110,7 +110,7 @@ export function DashboardStats() {
       subtitle: "3 " + t("overdue"),
       icon: AlertCircle,
       trend: { value: 15, isPositive: false },
-      color: "text-red-600"
+      color: "text-destructive"
     },
     {
       title: t("avg_daily_hours"),
@@ -118,14 +118,14 @@ export function DashboardStats() {
       subtitle: t("target") + ": 8h",
       icon: Timer,
       trend: { value: 3, isPositive: true },
-      color: "text-cyan-600"
+      color: "text-chart-2"
     },
     {
       title: t("days_worked"),
       value: "5/5",
       subtitle: t("this_week"),
       icon: Calendar,
-      color: "text-indigo-600"
+      color: "text-chart-5"
     }
   ];
 

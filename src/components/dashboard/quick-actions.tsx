@@ -34,7 +34,7 @@ export function QuickActions() {
       icon: Plus,
       label: t("create_task"),
       description: t("add_new_task_to_project"),
-      color: "text-blue-600 bg-blue-50 hover:bg-blue-100",
+      color: "text-primary bg-primary/10 hover:bg-primary/20",
       onClick: () => console.log("Create task")
     },
     {
@@ -42,7 +42,7 @@ export function QuickActions() {
       icon: Clock,
       label: t("log_time"),
       description: t("manually_log_work_hours"),
-      color: "text-green-600 bg-green-50 hover:bg-green-100",
+      color: "text-chart-1 bg-chart-1/10 hover:bg-chart-1/20",
       onClick: () => console.log("Log time")
     },
     {
@@ -50,7 +50,7 @@ export function QuickActions() {
       icon: BarChart3,
       label: t("create_report"),
       description: t("generate_progress_report"),
-      color: "text-purple-600 bg-purple-50 hover:bg-purple-100",
+      color: "text-chart-3 bg-chart-3/10 hover:bg-chart-3/20",
       onClick: () => console.log("Create report")
     },
     {
@@ -58,7 +58,7 @@ export function QuickActions() {
       icon: Calendar,
       label: t("schedule_meeting"),
       description: t("book_team_meeting"),
-      color: "text-orange-600 bg-orange-50 hover:bg-orange-100",
+      color: "text-chart-4 bg-chart-4/10 hover:bg-chart-4/20",
       badgeCount: 3,
       onClick: () => console.log("Schedule meeting")
     },
@@ -67,7 +67,7 @@ export function QuickActions() {
       icon: MessageCircle,
       label: t("team_chat"),
       description: t("open_team_discussion"),
-      color: "text-indigo-600 bg-indigo-50 hover:bg-indigo-100",
+      color: "text-chart-5 bg-chart-5/10 hover:bg-chart-5/20",
       badgeCount: 5,
       onClick: () => console.log("Team chat")
     },
@@ -76,7 +76,7 @@ export function QuickActions() {
       icon: Upload,
       label: t("upload_file"),
       description: t("add_project_documents"),
-      color: "text-cyan-600 bg-cyan-50 hover:bg-cyan-100",
+      color: "text-chart-2 bg-chart-2/10 hover:bg-chart-2/20",
       onClick: () => console.log("Upload file")
     },
     {
@@ -84,7 +84,7 @@ export function QuickActions() {
       icon: Download,
       label: t("export_data"),
       description: t("download_project_data"),
-      color: "text-gray-600 bg-gray-50 hover:bg-gray-100",
+      color: "text-muted-foreground bg-muted hover:bg-muted/80",
       onClick: () => console.log("Export data")
     },
     {
@@ -92,7 +92,7 @@ export function QuickActions() {
       icon: Settings,
       label: t("settings"),
       description: t("configure_preferences"),
-      color: "text-slate-600 bg-slate-50 hover:bg-slate-100",
+      color: "text-muted-foreground bg-secondary hover:bg-secondary/80",
       onClick: () => console.log("Settings")
     }
   ];
@@ -104,7 +104,7 @@ export function QuickActions() {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <RefreshCw className="w-5 h-5 text-emerald-600" />
+          <RefreshCw className="w-5 h-5 text-chart-1" />
           {t("quick_actions")}
         </CardTitle>
       </CardHeader>
@@ -129,9 +129,9 @@ export function QuickActions() {
                     </Badge>
                   )}
                 </div>
-                <div className="space-y-1 text-left">
-                  <div className="font-medium text-sm">{action.label}</div>
-                  <div className="text-xs opacity-70">{action.description}</div>
+                <div className="space-y-1 text-left w-full">
+                  <div className="font-medium text-sm truncate">{action.label}</div>
+                  <div className="text-xs opacity-70 truncate">{action.description}</div>
                 </div>
               </Button>
             );
@@ -153,9 +153,9 @@ export function QuickActions() {
                   onClick={action.onClick}
                 >
                   <Icon className="w-4 h-4 mr-3" />
-                  <div className="flex-1 text-left">
-                    <div className="text-sm font-medium">{action.label}</div>
-                    <div className="text-xs opacity-70">{action.description}</div>
+                  <div className="flex-1 text-left min-w-0">
+                    <div className="text-sm font-medium truncate">{action.label}</div>
+                    <div className="text-xs opacity-70 truncate">{action.description}</div>
                   </div>
                   {action.badgeCount && (
                     <Badge variant="secondary" className="text-xs px-1.5 py-0">

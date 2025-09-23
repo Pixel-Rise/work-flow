@@ -79,87 +79,87 @@ export function getFileType(fileName: string): string {
 const fileTypeConfig = {
   document: {
     icon: FileText,
-    color: "text-blue-600",
-    bgColor: "bg-blue-100",
-    borderColor: "border-blue-200"
+    color: "text-primary",
+    bgColor: "bg-primary/10",
+    borderColor: "border-primary/20"
   },
   pdf: {
     icon: FileType,
-    color: "text-red-600",
-    bgColor: "bg-red-100",
-    borderColor: "border-red-200"
+    color: "text-destructive",
+    bgColor: "bg-destructive/10",
+    borderColor: "border-destructive/20"
   },
   spreadsheet: {
     icon: FileSpreadsheet,
-    color: "text-green-600",
-    bgColor: "bg-green-100",
-    borderColor: "border-green-200"
+    color: "text-chart-1",
+    bgColor: "bg-chart-1/10",
+    borderColor: "border-chart-1/20"
   },
   presentation: {
     icon: Presentation,
-    color: "text-orange-600",
-    bgColor: "bg-orange-100",
-    borderColor: "border-orange-200"
+    color: "text-chart-4",
+    bgColor: "bg-chart-4/10",
+    borderColor: "border-chart-4/20"
   },
   image: {
     icon: ImageIcon,
-    color: "text-purple-600",
-    bgColor: "bg-purple-100",
-    borderColor: "border-purple-200"
+    color: "text-chart-3",
+    bgColor: "bg-chart-3/10",
+    borderColor: "border-chart-3/20"
   },
   video: {
     icon: FileVideo,
-    color: "text-pink-600",
-    bgColor: "bg-pink-100",
-    borderColor: "border-pink-200"
+    color: "text-chart-5",
+    bgColor: "bg-chart-5/10",
+    borderColor: "border-chart-5/20"
   },
   audio: {
     icon: FileAudio,
-    color: "text-indigo-600",
-    bgColor: "bg-indigo-100",
-    borderColor: "border-indigo-200"
+    color: "text-chart-2",
+    bgColor: "bg-chart-2/10",
+    borderColor: "border-chart-2/20"
   },
   archive: {
     icon: Package,
-    color: "text-yellow-700",
-    bgColor: "bg-yellow-100",
-    borderColor: "border-yellow-200"
+    color: "text-chart-4",
+    bgColor: "bg-chart-4/10",
+    borderColor: "border-chart-4/20"
   },
   code: {
     icon: FileCode,
-    color: "text-emerald-600",
-    bgColor: "bg-emerald-100",
-    borderColor: "border-emerald-200"
+    color: "text-chart-1",
+    bgColor: "bg-chart-1/10",
+    borderColor: "border-chart-1/20"
   },
   database: {
     icon: Database,
-    color: "text-gray-600",
-    bgColor: "bg-gray-100",
-    borderColor: "border-gray-200"
+    color: "text-muted-foreground",
+    bgColor: "bg-muted",
+    borderColor: "border-border"
   },
   executable: {
     icon: Cpu,
-    color: "text-slate-600",
-    bgColor: "bg-slate-100",
-    borderColor: "border-slate-200"
+    color: "text-muted-foreground",
+    bgColor: "bg-secondary",
+    borderColor: "border-border"
   },
   font: {
     icon: Palette,
-    color: "text-rose-600",
-    bgColor: "bg-rose-100",
-    borderColor: "border-rose-200"
+    color: "text-chart-5",
+    bgColor: "bg-chart-5/10",
+    borderColor: "border-chart-5/20"
   },
   "3d": {
     icon: Zap,
-    color: "text-cyan-600",
-    bgColor: "bg-cyan-100",
-    borderColor: "border-cyan-200"
+    color: "text-chart-2",
+    bgColor: "bg-chart-2/10",
+    borderColor: "border-chart-2/20"
   },
   unknown: {
     icon: FileIcon,
     color: "text-muted-foreground",
     bgColor: "bg-muted",
-    borderColor: "border-muted"
+    borderColor: "border-border"
   }
 };
 

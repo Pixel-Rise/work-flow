@@ -122,18 +122,18 @@ const sampleActivities: ActivityItem[] = [
 ];
 
 const activityIcons = {
-  task_completed: { icon: CheckCircle, color: "text-green-600" },
-  comment: { icon: MessageCircle, color: "text-blue-600" },
-  file_upload: { icon: Upload, color: "text-purple-600" },
-  status_change: { icon: Activity, color: "text-orange-600" },
-  commit: { icon: GitCommit, color: "text-gray-600" },
-  meeting_joined: { icon: Users, color: "text-indigo-600" }
+  task_completed: { icon: CheckCircle, color: "text-chart-1" },
+  comment: { icon: MessageCircle, color: "text-primary" },
+  file_upload: { icon: Upload, color: "text-chart-3" },
+  status_change: { icon: Activity, color: "text-chart-4" },
+  commit: { icon: GitCommit, color: "text-muted-foreground" },
+  meeting_joined: { icon: Users, color: "text-chart-5" }
 };
 
 const statusDots = {
-  online: "bg-green-500",
-  away: "bg-yellow-500",
-  offline: "bg-gray-400"
+  online: "bg-chart-1",
+  away: "bg-chart-4",
+  offline: "bg-muted-foreground"
 };
 
 function ActivityItem({ activity }: { activity: ActivityItem }) {
@@ -223,12 +223,12 @@ export function TeamActivityFeed() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <Activity className="w-5 h-5 text-indigo-600" />
+            <Activity className="w-5 h-5 text-chart-5" />
             {t("team_activity")}
           </CardTitle>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <div className="w-2 h-2 bg-green-500 rounded-full" />
+              <div className="w-2 h-2 bg-chart-1 rounded-full" />
               <span>{onlineMembers} {t("online")}</span>
             </div>
             <Button variant="ghost" size="sm" className="text-xs">
@@ -240,7 +240,7 @@ export function TeamActivityFeed() {
       </CardHeader>
 
       <CardContent className="space-y-2">
-        <div className="max-h-96 overflow-y-auto space-y-1">
+        <div className="max-h-64 overflow-y-auto space-y-1">
           {recentActivities.map((activity) => (
             <ActivityItem key={activity.id} activity={activity} />
           ))}

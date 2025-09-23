@@ -54,15 +54,17 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 
 type WorkMode = "on_office" | "remote";
 
-const taskList = [
-  { id: 1, title: "Build user dashboard", status: "in_progress" },
-  { id: 2, title: "Fix login issue", status: "todo" },
-  { id: 3, title: "Write unit tests", status: "in_progress" },
-];
+// Demo task list - moved inside component to access t() function
 
 export default function HomePage() {
   const t = useTranslation();
   usePageTitle(t("dashboard"));
+
+  const taskList = [
+    { id: 1, title: t("demo_task_build_dashboard"), status: "in_progress" },
+    { id: 2, title: t("demo_task_fix_login"), status: "todo" },
+    { id: 3, title: t("demo_task_write_tests"), status: "in_progress" },
+  ];
 
   const [isWorking, setIsWorking] = useState(false);
   const [workMode, setWorkMode] = useState<WorkMode | null>(null);
@@ -118,7 +120,7 @@ export default function HomePage() {
 
   const chartConfig: ChartConfig = {
     desktop: {
-      label: "Hours",
+      label: t("chart_label_hours"),
       color: "hsl(var(--primary))",
     },
   };
@@ -360,33 +362,33 @@ export default function HomePage() {
       {/* Toast Demo Card */}
       <Card className="p-6">
         <CardHeader>
-          <CardTitle>Toast Notifications Demo</CardTitle>
+          <CardTitle>{t("toast_demo_title")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Button
-              onClick={() => toast.success("Muvaffaqiyat!", "Sizning amalingiz muvaffaqiyatli bajarildi.")}
+              onClick={() => toast.success(t("toast_success_title"), t("toast_success_message"))}
               variant="default"
             >
-              Success Toast
+              {t("toast_success_btn")}
             </Button>
             <Button
-              onClick={() => toast.error("Xatolik!", "So'rovingizda nimadir noto'g'ri ketdi.")}
+              onClick={() => toast.error(t("toast_error_title"), t("toast_error_message"))}
               variant="destructive"
             >
-              Error Toast
+              {t("toast_error_btn")}
             </Button>
             <Button
-              onClick={() => toast.warning("Ogohlantirish!", "Davom etishdan oldin ma'lumotlaringizni tekshiring.")}
+              onClick={() => toast.warning(t("toast_warning_title"), t("toast_warning_message"))}
               variant="outline"
             >
-              Warning Toast
+              {t("toast_warning_btn")}
             </Button>
             <Button
-              onClick={() => toast.info("Ma'lumot!", "Bu sizga foydali ma'lumot.")}
+              onClick={() => toast.info(t("toast_info_title"), t("toast_info_message"))}
               variant="secondary"
             >
-              Info Toast
+              {t("toast_info_btn")}
             </Button>
           </div>
           
@@ -400,27 +402,27 @@ export default function HomePage() {
                 })
                 
                 toast.promise(promise, {
-                  loading: "Yuklanmoqda...",
-                  success: "Muvaffaqiyatli yuklandi!",
-                  error: "Yuklashda xatolik yuz berdi!"
+                  loading: t("toast_loading_message"),
+                  success: t("toast_loading_success"),
+                  error: t("toast_loading_error")
                 })
               }}
               variant="outline"
             >
-              Promise Toast
+              {t("toast_promise_btn")}
             </Button>
             
             <Button
               onClick={() => {
-                const toastId = toast.loading("Uzun jarayon boshlanmoqda...")
+                const toastId = toast.loading(t("toast_long_process_start"))
                 setTimeout(() => {
                   toast.dismiss(toastId)
-                  toast.success("Jarayon yakunlandi!")
+                  toast.success(t("toast_long_process_end"))
                 }, 3000)
               }}
               variant="outline"
             >
-              Loading Toast
+              {t("toast_loading_btn")}
             </Button>
 
             <Button
@@ -429,15 +431,15 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 p-2">
                     <span className="text-2xl">🎉</span>
                     <div>
-                      <div className="font-semibold">Maxsus xabar!</div>
-                      <div className="text-sm text-muted-foreground">Bu custom toast misoli</div>
+                      <div className="font-semibold">{t("toast_custom_title")}</div>
+                      <div className="text-sm text-muted-foreground">{t("toast_custom_message")}</div>
                     </div>
                   </div>
                 )
               }}
               variant="outline"
             >
-              Custom Toast
+              {t("toast_custom_btn")}
             </Button>
           </div>
         </CardContent>
