@@ -1,5 +1,5 @@
 // App.tsx
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { LanguageProvider } from "@/components/language-provider";
 import { TitleProvider } from "@/components/title-provider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
